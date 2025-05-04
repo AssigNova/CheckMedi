@@ -22,7 +22,7 @@ export default function PharmacyDashboard() {
         {/* Sidebar */}
         <div className="w-64 bg-white h-screen shadow-lg fixed">
           <div className="p-6 border-b">
-            <h2 className="text-xl font-bold text-blue-600">MedConnect</h2>
+            <h2 className="text-xl font-bold text-blue-600">CheckMedi</h2>
             <p className="text-sm text-gray-500">Pharmacy Portal</p>
           </div>
 

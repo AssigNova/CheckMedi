@@ -24,7 +24,7 @@ export default function LandingPage() {
           <div className="flex justify-between h-16 items-center">
             <div className="flex-shrink-0 flex items-center">
               <img className="h-8 w-auto" src={mediCheck} />
-              <span className="ml-2 text-xl font-bold text-blue-600">MedConnect</span>
+              <span className="ml-2 text-xl font-bold text-blue-600">CheckMedi</span>
             </div>
             <div className="hidden md:flex space-x-8">
               <button onClick={() => setActiveSection("features")} className="text-gray-600 hover:text-blue-600">
@@ -229,7 +229,7 @@ export default function LandingPage() {
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
           <div>
-            <h4 className="text-lg font-semibold mb-4">MedConnect</h4>
+            <h4 className="text-lg font-semibold mb-4">CheckMedi</h4>
             <p className="text-gray-400">Bridging the healthcare gap through technology</p>
           </div>
           {/* Add more footer columns */}
