@@ -11,9 +11,9 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/CheckMedi" element={<LandingPage />} />
-        <Route path="/patient" element={<PatientDashboard />} />
-        <Route path="/doctor" element={<DoctorDashboard />} />
-        <Route path="/pharmacy" element={<PharmacyDashboard />} />
+        <Route path="/CheckMedi/patient" element={<PatientDashboard />} />
+        <Route path="/CheckMedi/doctor" element={<DoctorDashboard />} />
+        <Route path="/CheckMedi/pharmacy" element={<PharmacyDashboard />} />
       </Routes>
     </Router>
   );
