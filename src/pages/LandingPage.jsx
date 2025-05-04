@@ -13,6 +13,20 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/outline";
 
+import {
+  FaHospital,
+  FaClinicMedical,
+  FaPaw,
+  FaPrescriptionBottle,
+  FaFlask,
+  FaShieldAlt,
+  FaMapMarkerAlt,
+  FaMicroscope,
+  FaHandHoldingHeart,
+  FaSpa,
+} from "react-icons/fa";
+import { GiMedicinePills, GiHerbsBundle } from "react-icons/gi";
+
 export default function LandingPage() {
   const [activeSection, setActiveSection] = useState("overview");
 
@@ -40,7 +54,6 @@ export default function LandingPage() {
           </div>
         </div>
       </nav>
-
       {/* Hero Section */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
@@ -74,6 +87,41 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <section className="bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <h3 className="text-2xl font-semibold text-center mb-8 text-gray-700">Comprehensive Healthcare Services</h3>
+          <div className="flex overflow-x-auto pb-4 gap-4 md:justify-center">
+            {[
+              { name: "Hospital", icon: FaHospital },
+              { name: "Hospital", icon: FaHospital },
+              { name: "Hospital", icon: FaHospital },
+              { name: "Hospital", icon: FaHospital },
+              { name: "Hospital", icon: FaHospital },
+              { name: "Clinics", icon: FaClinicMedical },
+              { name: "Medical Centre", icon: FaHospital },
+              { name: "Ayurvedic", icon: GiHerbsBundle },
+              { name: "Unani", icon: GiMedicinePills },
+              { name: "Spa & Wellness", icon: FaSpa },
+              { name: "Pet Treatments", icon: FaPaw },
+              { name: "Pharmacy", icon: FaPrescriptionBottle },
+              { name: "Labs", icon: FaFlask },
+              { name: "Medical Insurance", icon: FaShieldAlt },
+              { name: "Medical Destinations", icon: FaMapMarkerAlt },
+              { name: "Research Centre", icon: FaMicroscope },
+              { name: "Donors", icon: FaHandHoldingHeart },
+            ].map((service, idx) => (
+              <button
+                key={idx}
+                className="flex flex-col items-center p-4 min-w-[120px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-100"
+              >
+                <service.icon className="h-8 w-8 text-blue-600 mb-2" />
+                <span className="text-sm text-gray-700 text-center">{service.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Stats Section */}
       <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 text-center px-4">
@@ -91,7 +139,6 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-
       {/* Features Section */}
       <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
@@ -112,7 +159,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
       {/* How It Works */}
       <section className="py-20 px-4 bg-gradient-to-b from-white to-blue-50">
         <div className="max-w-7xl mx-auto">
@@ -213,7 +259,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <div className="bg-blue-600 text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -224,7 +269,6 @@ export default function LandingPage() {
           </button>
         </div>
       </div>
-
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
