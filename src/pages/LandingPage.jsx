@@ -52,19 +52,19 @@ export default function LandingPage() {
             Bridging the gap between patients, doctors, and pharmacies with an integrated digital healthcare platform
           </p>
           <div className="flex flex-col md:flex-row justify-center gap-4">
-            <a href="/CheckMedi/patient">
+            <a href="/patient">
               <button className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 flex items-center gap-2">
                 I am a Patient
                 <ArrowRightIcon className="h-5 w-5" />
               </button>
             </a>
-            <a href="/CheckMedi//doctor">
+            <a href="/doctor">
               <button className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 flex items-center gap-2">
                 Doctor's Cabin
                 <ArrowRightIcon className="h-5 w-5" />
               </button>
             </a>
-            <a href="/CheckMedi//pharmacy">
+            <a href="/pharmacy">
               <button className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 flex items-center gap-2">
                 Pharmacy Store
                 <ArrowRightIcon className="h-5 w-5" />
