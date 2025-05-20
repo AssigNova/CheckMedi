@@ -10,7 +10,6 @@ import {
   FaHandHoldingHeart,
 } from "react-icons/fa";
 import { GiMedicinePills, GiHerbsBundle } from "react-icons/gi";
-import "../index.css"; // Ensure global styles are applied
 
 export default function ServicesSection() {
   const services = [
@@ -31,7 +30,7 @@ export default function ServicesSection() {
   return (
     <section className="bg-white py-4">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex overflow-x-auto gap-4 md:justify-center hide-scrollbar">
+        <div className="flex overflow-x-auto gap-4 hide-scrollbar px-4">
           {services.map((service, idx) => (
             <button
               key={idx}

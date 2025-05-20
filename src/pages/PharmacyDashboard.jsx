@@ -9,6 +9,8 @@ import {
   ArchiveIcon,
   ClockIcon,
 } from "@heroicons/react/outline";
+import SideBar from "../Templates/SideBar";
+import StatCard from "../components/StatCard";
 
 export default function PharmacyDashboard() {
   const [activeTab, setActiveTab] = useState("orders");
@@ -19,33 +21,18 @@ export default function PharmacyDashboard() {
     <div className="min-h-screen bg-gray-50">
       {/* Dashboard Layout */}
       <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-white h-screen shadow-lg fixed">
-          <div className="p-6 border-b">
-            <h2 className="text-xl font-bold text-blue-600">CheckMedi</h2>
-            <p className="text-sm text-gray-500">Pharmacy Portal</p>
-          </div>
-
-          <nav className="mt-6 space-y-1">
-            {[
-              { id: "orders", icon: TruckIcon, label: "Order Management" },
-              { id: "inventory", icon: ArchiveIcon, label: "Inventory" },
-              { id: "prescriptions", icon: DocumentTextIcon, label: "Prescriptions" },
-              { id: "analytics", icon: ChartBarIcon, label: "Analytics" },
-            ].map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center px-6 py-3 text-sm ${
-                  activeTab === item.id ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600" : "text-gray-600 hover:bg-gray-50"
-                }`}
-              >
-                <item.icon className="h-5 w-5 mr-3" />
-                {item.label}
-              </button>
-            ))}
-          </nav>
-        </div>
+        <SideBar
+          heading={"CheckMedi"}
+          text={"Pharmacy Portal"}
+          activeTab={activeTab}
+          onClickTab={setActiveTab}
+          values={[
+            { id: "orders", icon: TruckIcon, label: "Order Management" },
+            { id: "inventory", icon: ArchiveIcon, label: "Inventory" },
+            { id: "prescriptions", icon: DocumentTextIcon, label: "Prescriptions" },
+            { id: "analytics", icon: ChartBarIcon, label: "Analytics" },
+          ]}
+        />
 
         {/* Main Content */}
         <div className="ml-64 p-8 w-full">
@@ -177,15 +164,6 @@ export default function PharmacyDashboard() {
     </div>
   );
 }
-
-// Reusable Components
-const StatCard = ({ title, value, trend, color }) => (
-  <div className={`bg-white p-4 rounded-xl border-l-4 border-${color}-600 shadow-sm`}>
-    <h3 className="text-gray-500 text-sm mb-2">{title}</h3>
-    <div className="text-2xl font-bold mb-1">{value}</div>
-    <div className={`text-sm text-${color}-600`}>{trend}</div>
-  </div>
-);
 
 const InventoryItem = ({ medication, stock, threshold, lastOrder, critical }) => (
   <div className={`p-4 rounded-lg border-l-4 ${critical ? "border-red-600 bg-red-50" : "border-blue-600 bg-gray-50"}`}>

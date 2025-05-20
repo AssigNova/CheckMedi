@@ -1,4 +1,4 @@
-import mediCheck from "../MediCheck.png";
+import mediCheck from "../assets/MediCheck.png";
 
 export default function Navbar() {
   return (

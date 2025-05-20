@@ -13,13 +13,16 @@ import {
 } from "react-icons/fa";
 import { GiMedicinePills, GiHerbsBundle } from "react-icons/gi";
 
-import StatsSection from "../components/StatsSection";
-import FeaturesSection from "../components/FeaturesSection";
-import HeroSection from "../components/HeroSection";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ServicesSection from "../components/ServicesSection";
-import HowItWorksSection from "../components/HowItWorksSection";
+import StatsSection from "./HomePage/StatsSection";
+import FeaturesSection from "./HomePage/FeaturesSection";
+import HeroSection from "./HomePage/HeroSection";
+import Navbar from "../Templates/Navbar";
+import Footer from "../Templates/Footer";
+import ServicesSection from "./HomePage/ServicesSection";
+import HowItWorksSection from "./HomePage/HowItWorksSection";
+import HealthcareService from "./HomePage/HealthcareService";
+import ConsultationPlans from "./HomePage/ConsultationPlans";
+import ProductSlider from "./HomePage/ProductSlider";
 
 export default function LandingPage() {
   return (
@@ -32,6 +35,15 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <HeroSection />
+
+      {/* Product Ads */}
+      <ProductSlider />
+
+      {/* Healthcare Service Section */}
+      <HealthcareService />
+
+      {/* Consultation Plans */}
+      <ConsultationPlans />
 
       {/* Stats Section */}
       <StatsSection />
