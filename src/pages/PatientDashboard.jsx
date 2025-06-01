@@ -59,17 +59,34 @@ export default function PatientDashboard() {
 
           {/* Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <QuickActions text="Book New Appointment" icon={CalendarIcon} color="blue" link="/" />
+            <QuickActions text="Book New Appointment" icon={CalendarIcon} color="blue" link="/book-appointment" />
             <QuickActions text="Start Video Consultation" icon={VideoCameraIcon} color="green" link="/" />
             <QuickActions text="Order Medicines" icon={TruckIcon} color="purple" link="/" />
           </div>
 
           {/* Health Overview */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <StatCard title="Last BP Reading" value="120/80" trend="Normal" color="green" />
-            <StatCard title="Active Medications" value="3" trend="All current" color="blue" />
-            <StatCard title="Next Checkup" value="15 Days" trend="Cardiologist" color="purple" />
-            <StatCard title="Wellness Score" value="92/100" trend="Excellent" color="orange" />
+            <StatCard title="Last BP Reading" value={patientProfile?.healthSummary?.lastBpReading || "N/A"} trend="Normal" color="green" />
+            <StatCard
+              title="Active Medications"
+              value={patientProfile?.healthSummary?.activeMedicationsCount?.toString() || "N/A"}
+              trend="All current"
+              color="blue"
+            />
+            <StatCard
+              title="Next Checkup"
+              value={
+                patientProfile ? `${patientProfile.healthSummary.nextCheckupDate} (${patientProfile.healthSummary.nextCheckupType})` : "N/A"
+              }
+              trend={patientProfile?.healthSummary?.nextCheckupType || ""}
+              color="purple"
+            />
+            <StatCard
+              title="Wellness Score"
+              value={patientProfile?.healthSummary?.wellnessScore || "N/A"}
+              trend="Excellent"
+              color="orange"
+            />
           </div>
 
           {/* Upcoming Appointments */}
