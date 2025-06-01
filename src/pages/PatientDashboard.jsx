@@ -1,5 +1,5 @@
 import { useState } from "react";
-import doctor from "../doctor.jpeg";
+import { useLoaderData } from "react-router-dom";
 import {
   CalendarIcon,
   UserCircleIcon,
@@ -16,14 +16,17 @@ import StatCard from "../components/StatCard";
 import PrescriptionItem from "../components/PrescriptionItem";
 import Appointment from "../components/Appointment";
 import QuickActions from "../components/QuickActions";
+import AppointmentList from "../components/AppointmentList";
 
 import SideBar from "../Templates/SideBar";
 import WrapperCard from "../Templates/WrapperCard";
-import { color } from "framer-motion";
 
 export default function PatientDashboard() {
+  const profile = useLoaderData();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [prescriptionFilter, setPrescriptionFilter] = useState("active");
+
+  if (!profile) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -36,6 +39,7 @@ export default function PatientDashboard() {
             { id: "appointments", icon: CalendarIcon, label: "Appointments" },
             { id: "prescriptions", icon: DocumentTextIcon, label: "Prescriptions" },
             { id: "profile", icon: UserCircleIcon, label: "Profile" },
+            { id: "book-appointment", icon: CalendarIcon, label: "Book Appointment", link: "/book-appointment" },
           ]}
           heading="CheckMedi"
           text="Patient Portal"
@@ -47,8 +51,10 @@ export default function PatientDashboard() {
         <div className="ml-64 p-8 w-full">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome Back, Sarah!</h1>
-            <p className="text-gray-600 mt-2">Your Health Summary: 2 upcoming appointments • 3 active prescriptions</p>
+            <h1 className="text-3xl font-bold text-gray-900">Welcome Back, {profile.name}!</h1>
+            <p className="text-gray-600 mt-2">
+              Email: {profile.email} | Role: {profile.role}
+            </p>
           </div>
 
           {/* Quick Actions */}
@@ -68,46 +74,8 @@ export default function PatientDashboard() {
 
           {/* Upcoming Appointments */}
           <WrapperCard heading={"Upcoming Appointments"} options={<button className="text-blue-600 hover:text-blue-700">View All</button>}>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="text-left text-gray-500 border-b">
-                    <th className="pb-3">Doctor</th>
-                    <th className="pb-3">Date & Time</th>
-                    <th className="pb-3">Type</th>
-                    <th className="pb-3">Status</th>
-                    <th className="pb-3">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <Appointment
-                    values={[
-                      { text: "Dr. Ankit Sharma", color: "" },
-                      { text: "Today 3:00 PM", color: "" },
-                      { text: "Video", color: "blue" },
-                      { text: "Confirmed", color: "green" },
-                    ]}
-                  />
-                  <Appointment
-                    values={[
-                      { text: "Dr. Anand Sethi", color: "" },
-                      { text: "Today 5:00 PM", color: "" },
-                      { text: "Video", color: "blue" },
-                      { text: "Confirmed", color: "green" },
-                    ]}
-                  />
-                  <Appointment
-                    values={[
-                      { text: "Dr. Ahrar", color: "" },
-                      { text: "Today 5:00 PM", color: "" },
-                      { text: "Video", color: "blue" },
-                      { text: "Pending", color: "red" },
-                    ]}
-                  />
-                  {/* More appointment rows */}
-                </tbody>
-              </table>
-            </div>
+            {/* Replace static Appointment rows with dynamic AppointmentList */}
+            <AppointmentList role="Patient" />
           </WrapperCard>
 
           {/* Benefits Section */}

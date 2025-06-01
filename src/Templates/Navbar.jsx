@@ -1,21 +1,63 @@
 import mediCheck from "../assets/MediCheck.png";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Navbar() {
+  const { loggedIn, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleProfile = () => navigate("/profile");
+  const handleLogin = () => navigate("/login");
+  const handleSignup = () => navigate("/signup");
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <>
       <nav className="sticky top-0 bg-white text-gray-800 shadow-md z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Top Section with Logo and Links */}
           <div className="flex justify-between h-16 items-center">
-            <div className="flex-shrink-0 flex items-center">
-              <img className="h-8 w-auto" src={mediCheck} alt="CheckMedi Logo" />
-              <span className="ml-2 text-xl font-bold text-blue-600">CheckMedi</span>
-            </div>
+            <a href="/">
+              <div className="flex-shrink-0 flex items-center">
+                <img className="h-8 w-auto" src={mediCheck} alt="CheckMedi Logo" />
+                <span className="ml-2 text-xl font-bold text-blue-600">CheckMedi</span>
+              </div>
+            </a>
             <div className="hidden md:flex space-x-8">
+              <button className="hover:text-blue-600">Articles</button>
               <button className="hover:text-blue-600">For Hospitals</button>
               <button className="hover:text-blue-600">For Pharmacy</button>
-              <button className="hover:text-blue-600">Jobs</button>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700">Login / Signup</button>
+              <a className="text-center align-middle flex" href="/jobs">
+                <button className="hover:text-blue-600">Jobs</button>
+              </a>
+              {loggedIn ? (
+                <div className="flex justify-between">
+                  <button onClick={handleProfile} className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700">
+                    Profile
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-400 ml-2"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="flex justify-between">
+                  <button onClick={handleLogin} className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700">
+                    Login
+                  </button>
+                  <button
+                    onClick={handleSignup}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 ml-2"
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -46,6 +88,7 @@ export default function Navbar() {
             <option>Provider B</option>
           </select>
           <button className="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700">Search</button>
+          <button className="bg-purple-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-purple-700">Shop</button>
         </div>
       </div>
     </>

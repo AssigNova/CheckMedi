@@ -27,9 +27,6 @@ import ProductSlider from "./HomePage/ProductSlider";
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
-      {/* Navigation Bar */}
-      <Navbar />
-
       {/* Services Section */}
       <ServicesSection />
 

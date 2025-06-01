@@ -1,21 +1,14 @@
 import { useState } from "react";
-import {
-  TruckIcon,
-  ClipboardListIcon,
-  DocumentTextIcon,
-  ChartBarIcon,
-  CurrencyDollarIcon,
-  UserCircleIcon,
-  ArchiveIcon,
-  ClockIcon,
-} from "@heroicons/react/outline";
+import { TruckIcon, DocumentTextIcon, ChartBarIcon, ArchiveIcon } from "@heroicons/react/outline";
 import SideBar from "../Templates/SideBar";
 import StatCard from "../components/StatCard";
 
-export default function PharmacyDashboard() {
+export default function PharmacyDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("orders");
   const [orderFilter, setOrderFilter] = useState("pending");
   const [selectedOrder, setSelectedOrder] = useState(null);
+
+  if (!profile) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -38,8 +31,10 @@ export default function PharmacyDashboard() {
         <div className="ml-64 p-8 w-full">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">PharmaCare Dashboard</h1>
-            <p className="text-gray-600 mt-2">Current Status: 15 pending orders • 82% fulfillment rate</p>
+            <h1 className="text-3xl font-bold text-gray-900">Pharmacy Dashboard - {profile.name}</h1>
+            <p className="text-gray-600 mt-2">
+              Email: {profile.email} | Role: {profile.role}
+            </p>
           </div>
 
           {/* Quick Stats */}

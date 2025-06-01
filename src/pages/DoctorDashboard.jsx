@@ -13,13 +13,16 @@ import {
 
 import BenefitItem from "../components/BenefitItem";
 import Appointment from "../components/Appointment";
+import AppointmentList from "../components/AppointmentList";
 import StatCard from "../components/StatCard";
 import SideBar from "../Templates/SideBar";
 import WrapperCard from "../Templates/WrapperCard";
 
-export default function DoctorDashboard() {
+export default function DoctorDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("overview");
   const [scheduleView, setScheduleView] = useState("upcoming");
+
+  if (!profile) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -43,8 +46,10 @@ export default function DoctorDashboard() {
         <div className="ml-64 p-8 w-full">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome, Dr. Anand</h1>
-            <p className="text-gray-600 mt-2">Today's Summary: 5 appointments • 3 consultations • ₹42,800 earned</p>
+            <h1 className="text-3xl font-bold text-gray-900">Welcome, Dr. {profile.name}</h1>
+            <p className="text-gray-600 mt-2">
+              Email: {profile.email} | Role: {profile.role}
+            </p>
           </div>
 
           {/* Dual Value Proposition Section */}
@@ -162,6 +167,10 @@ export default function DoctorDashboard() {
               </table>
             </div>
           </WrapperCard>
+
+          {/* My Appointments Section */}
+          <h2 className="text-2xl font-bold mb-6">My Appointments</h2>
+          <AppointmentList role="Doctor" />
 
           {/* Stats Footer */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
