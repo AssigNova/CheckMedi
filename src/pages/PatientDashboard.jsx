@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import doctor from "../doctor.jpeg";
 import {
   CalendarIcon,
@@ -21,9 +21,39 @@ import SideBar from "../Templates/SideBar";
 import WrapperCard from "../Templates/WrapperCard";
 import { color } from "framer-motion";
 
+const mockPatientProfile = {
+  id: "pat001",
+  firstName: "Sarah",
+  lastName: "Connor",
+  email: "sarah.connor@example.com",
+  dateOfBirth: "1985-05-10",
+  profileImage: "", // Placeholder for image
+  healthSummary: {
+    upcomingAppointments: 2,
+    activePrescriptions: 3,
+    lastBpReading: "122/78",
+    activeMedicationsCount: 3,
+    nextCheckupDate: "2024-08-15",
+    nextCheckupType: "Cardiologist",
+    wellnessScore: "92/100",
+  },
+};
+
 export default function PatientDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [prescriptionFilter, setPrescriptionFilter] = useState("active");
+  const [patientProfile, setPatientProfile] = useState(null);
+
+  useEffect(() => {
+    // Simulate API call
+    const fetchProfileData = () => {
+      setTimeout(() => {
+        setPatientProfile(mockPatientProfile);
+      }, 1000); // Simulate 1 second delay
+    };
+
+    fetchProfileData();
+  }, []); // Empty dependency array to run only once on mount
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -47,23 +77,25 @@ export default function PatientDashboard() {
         <div className="ml-64 p-8 w-full">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome Back, Sarah!</h1>
-            <p className="text-gray-600 mt-2">Your Health Summary: 2 upcoming appointments • 3 active prescriptions</p>
+            <h1 className="text-3xl font-bold text-gray-900">Welcome Back, {patientProfile ? patientProfile.firstName : "User"}!</h1>
+            <p className="text-gray-600 mt-2">
+              Your Health Summary: {patientProfile ? patientProfile.healthSummary.upcomingAppointments : '...'} upcoming appointments • {patientProfile ? patientProfile.healthSummary.activePrescriptions : '...'} active prescriptions
+            </p>
           </div>
 
           {/* Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <QuickActions text="Book New Appointment" icon={CalendarIcon} color="blue" link="/" />
+            <QuickActions text="Book New Appointment" icon={CalendarIcon} color="blue" link="/book-appointment" />
             <QuickActions text="Start Video Consultation" icon={VideoCameraIcon} color="green" link="/" />
             <QuickActions text="Order Medicines" icon={TruckIcon} color="purple" link="/" />
           </div>
 
           {/* Health Overview */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <StatCard title="Last BP Reading" value="120/80" trend="Normal" color="green" />
-            <StatCard title="Active Medications" value="3" trend="All current" color="blue" />
-            <StatCard title="Next Checkup" value="15 Days" trend="Cardiologist" color="purple" />
-            <StatCard title="Wellness Score" value="92/100" trend="Excellent" color="orange" />
+            <StatCard title="Last BP Reading" value={patientProfile?.healthSummary?.lastBpReading || 'N/A'} trend="Normal" color="green" />
+            <StatCard title="Active Medications" value={patientProfile?.healthSummary?.activeMedicationsCount?.toString() || 'N/A'} trend="All current" color="blue" />
+            <StatCard title="Next Checkup" value={patientProfile ? `${patientProfile.healthSummary.nextCheckupDate} (${patientProfile.healthSummary.nextCheckupType})` : 'N/A'} trend={patientProfile?.healthSummary?.nextCheckupType || ''} color="purple" />
+            <StatCard title="Wellness Score" value={patientProfile?.healthSummary?.wellnessScore || 'N/A'} trend="Excellent" color="orange" />
           </div>
 
           {/* Upcoming Appointments */}
