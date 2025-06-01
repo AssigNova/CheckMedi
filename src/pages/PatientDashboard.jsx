@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLoaderData, useNavigation } from "react-router-dom";
 import {
   CalendarIcon,
   UserCircleIcon,
@@ -22,11 +22,58 @@ import SideBar from "../Templates/SideBar";
 import WrapperCard from "../Templates/WrapperCard";
 
 export default function PatientDashboard() {
-  const profile = useLoaderData();
+  const { patientData } = useLoaderData();
+  const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [prescriptionFilter, setPrescriptionFilter] = useState("active");
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [prescriptionsLoading, setPrescriptionsLoading] = useState(true);
+  const [prescriptionsError, setPrescriptionsError] = useState(null);
 
-  if (!profile) return null;
+  useEffect(() => {
+    const fetchPrescriptions = async () => {
+      setPrescriptionsLoading(true);
+      setPrescriptionsError(null);
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch("/api/prescriptions/patient/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setPrescriptions(data);
+      } catch (error) {
+        setPrescriptionsError(error.message);
+      } finally {
+        setPrescriptionsLoading(false);
+      }
+    };
+
+    fetchPrescriptions();
+  }, []);
+
+  if (navigation.state === "loading") {
+    return <p>Loading patient data...</p>;
+  }
+
+  // Error handling can be improved with a dedicated errorElement in the route
+  if (!patientData) {
+    return <p>Error loading patient data. Please try again later.</p>;
+  }
+
+  // patientData is the profile object from the loader, containing healthSummary and other profile fields.
+  const {
+    firstName,
+    email,
+    role,
+    healthSummary
+    // any other fields like lastName, dateOfBirth, etc. can be destructured here if needed directly
+  } = patientData;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -51,9 +98,9 @@ export default function PatientDashboard() {
         <div className="ml-64 p-8 w-full">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome Back, {profile.name}!</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Welcome Back, {firstName || 'Patient'}!</h1>
             <p className="text-gray-600 mt-2">
-              Email: {profile.email} | Role: {profile.role}
+              Email: {email || 'N/A'} | Role: {role || 'N/A'}
             </p>
           </div>
 
@@ -66,24 +113,24 @@ export default function PatientDashboard() {
 
           {/* Health Overview */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <StatCard title="Last BP Reading" value={patientProfile?.healthSummary?.lastBpReading || "N/A"} trend="Normal" color="green" />
+            <StatCard title="Last BP Reading" value={healthSummary?.lastBpReading || "N/A"} trend="Normal" color="green" />
             <StatCard
               title="Active Medications"
-              value={patientProfile?.healthSummary?.activeMedicationsCount?.toString() || "N/A"}
+              value={healthSummary?.activeMedicationsCount?.toString() || "N/A"}
               trend="All current"
               color="blue"
             />
             <StatCard
               title="Next Checkup"
               value={
-                patientProfile ? `${patientProfile.healthSummary.nextCheckupDate} (${patientProfile.healthSummary.nextCheckupType})` : "N/A"
+                healthSummary ? `${healthSummary.nextCheckupDate} (${healthSummary.nextCheckupType})` : "N/A"
               }
-              trend={patientProfile?.healthSummary?.nextCheckupType || ""}
+              trend={healthSummary?.nextCheckupType || ""}
               color="purple"
             />
             <StatCard
               title="Wellness Score"
-              value={patientProfile?.healthSummary?.wellnessScore || "N/A"}
+              value={healthSummary?.wellnessScore || "N/A"}
               trend="Excellent"
               color="orange"
             />
@@ -143,8 +190,29 @@ export default function PatientDashboard() {
               }
             >
               <div className="space-y-4">
-                <PrescriptionItem medication="Metformin 500mg" dosage="Twice daily after meals" status="Active" refills="2 remaining" />
-                {/* More prescription items */}
+                {prescriptionsLoading ? (
+                  <p>Loading prescriptions...</p>
+                ) : prescriptionsError ? (
+                  <p className="text-red-500">Error: {prescriptionsError}</p>
+                ) : (() => {
+                  const filteredPrescriptions = prescriptions.filter(p =>
+                    prescriptionFilter === "active" ? p.status === "Active" : p.status !== "Active"
+                  );
+
+                  if (filteredPrescriptions.length === 0) {
+                    return <p>No {prescriptionFilter} prescriptions found.</p>;
+                  }
+
+                  return filteredPrescriptions.map((p) => (
+                    <PrescriptionItem
+                      key={p._id}
+                      medication={p.medicationName || "N/A"}
+                      dosage={p.dosage || "N/A"}
+                      status={p.status || "N/A"}
+                      refills={p.refillsRemaining?.toString() || "N/A"}
+                    />
+                  ));
+                })()}
               </div>
             </WrapperCard>
           </div>

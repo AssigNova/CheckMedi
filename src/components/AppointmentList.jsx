@@ -11,7 +11,8 @@ export default function AppointmentList({ role }) {
       setError("");
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("/api/appointments", {
+        // Updated endpoint for fetching appointments for the current patient
+        const res = await fetch("/api/appointments/patient/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -47,8 +48,8 @@ export default function AppointmentList({ role }) {
         <tbody>
           {appointments.map((appt) => (
             <tr key={appt._id} className="border-b hover:bg-gray-50">
-              <td>{appt.doctor?.name || "-"}</td>
-              <td>{appt.patient?.name || "-"}</td>
+              <td>{`${appt.doctor?.firstName || ''} ${appt.doctor?.lastName || ''}`.trim() || "-"}</td>
+              <td>{`${appt.patient?.firstName || ''} ${appt.patient?.lastName || ''}`.trim() || "-"}</td>
               <td>{new Date(appt.date).toLocaleString()}</td>
               <td>{appt.type}</td>
               <td>{appt.status}</td>

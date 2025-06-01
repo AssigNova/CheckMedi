@@ -6,8 +6,13 @@ const auth = require("../middleware/auth"); // You need to implement this middle
 // All routes require authentication
 router.use(auth);
 
-router.post("/", appointmentController.createAppointment);
+// Route for patients to get their own appointments
+router.get("/patient/me", appointmentController.getAppointments);
+
+// Generic route to get appointments (controller logic handles filtering by role)
 router.get("/", appointmentController.getAppointments);
+
+router.post("/", appointmentController.createAppointment);
 router.put("/:id", appointmentController.updateAppointment);
 router.delete("/:id", appointmentController.deleteAppointment);
 

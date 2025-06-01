@@ -5,6 +5,7 @@ const patientRoutes = require("./routes/patientRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const prescriptionRoutes = require("./routes/prescriptionRoutes"); // Added prescription routes
 
 const app = express();
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use("/api/patients", patientRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/appointments", appointmentRoutes);
+app.use("/api/prescriptions", prescriptionRoutes); // Added prescription routes
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -31,7 +31,10 @@ exports.getAppointments = async (req, res) => {
     if (role === "Patient") query.patient = userId;
     else if (role === "Doctor") query.doctor = userId;
     else return res.status(403).json({ error: "Unauthorized" });
-    const appointments = await Appointment.find(query).populate("doctor", "name email").populate("patient", "name email").sort({ date: 1 });
+    const appointments = await Appointment.find(query)
+      .populate("doctor", "firstName lastName email") // Changed from "name email"
+      .populate("patient", "firstName lastName email") // Changed from "name email"
+      .sort({ date: 1 });
     res.json(appointments);
   } catch (err) {
     res.status(500).json({ error: err.message });
