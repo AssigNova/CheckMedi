@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Appointment from "./Appointment";
 import WrapperCard from "../Templates/WrapperCard";
+import PrescriptionModal from "./PrescriptionModal";
 
 export default function AppointmentList({ role, setScheduleView, scheduleView }) {
   const [appointments, setAppointments] = useState([]);
@@ -100,6 +101,8 @@ export default function AppointmentList({ role, setScheduleView, scheduleView })
 function ManageAppointmentButton({ appt, role, onAction }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPrescribe, setShowPrescribe] = useState(false);
+  const doctorId = appt.doctor?._id || appt.doctor; // fallback for populated or id
 
   const updateStatus = async (status) => {
     setLoading(true);
@@ -127,6 +130,20 @@ function ManageAppointmentButton({ appt, role, onAction }) {
   // Show buttons based on role and status
   return (
     <div className="flex flex-col gap-1">
+      {role === "Doctor" && appt.status === "completed" && (
+        <>
+          <button onClick={() => setShowPrescribe(true)} className="text-blue-600 hover:underline">
+            Prescribe
+          </button>
+          <PrescriptionModal
+            open={showPrescribe}
+            onClose={() => setShowPrescribe(false)}
+            appointment={appt}
+            doctorId={doctorId}
+            onSuccess={onAction}
+          />
+        </>
+      )}
       {role === "Doctor" && appt.status === "pending" && (
         <button onClick={() => updateStatus("confirmed")} disabled={loading} className="text-blue-600 hover:underline">
           Confirm

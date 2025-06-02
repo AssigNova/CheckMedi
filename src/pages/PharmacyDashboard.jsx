@@ -1,12 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TruckIcon, DocumentTextIcon, ChartBarIcon, ArchiveIcon } from "@heroicons/react/outline";
+import axios from "axios";
+
 import SideBar from "../Templates/SideBar";
 import StatCard from "../components/StatCard";
+import PrescriptionItem from "../components/PrescriptionItem";
 
 export default function PharmacyDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("orders");
   const [orderFilter, setOrderFilter] = useState("pending");
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [loadingPrescriptions, setLoadingPrescriptions] = useState(false);
+  const [errorPrescriptions, setErrorPrescriptions] = useState("");
+
+  useEffect(() => {
+    async function fetchPrescriptions() {
+      setLoadingPrescriptions(true);
+      setErrorPrescriptions("");
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get(`/api/prescriptions/pharmacy/${profile._id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setPrescriptions(res.data);
+      } catch (err) {
+        setErrorPrescriptions(err.response?.data?.error || "Failed to load prescriptions");
+      } finally {
+        setLoadingPrescriptions(false);
+      }
+    }
+    if (profile?._id) fetchPrescriptions();
+  }, [profile]);
 
   if (!profile) return null;
 
@@ -126,21 +151,25 @@ export default function PharmacyDashboard({ profile }) {
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <h2 className="text-2xl font-semibold mb-6 text-green-600">Prescription Validation</h2>
               <div className="space-y-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h4 className="font-semibold">Dr. Ankit Sharma</h4>
-                      <p className="text-sm text-gray-600">License: MH-2345-2020</p>
-                    </div>
-                    <span className="bg-green-100 text-green-600 px-2 py-1 rounded text-sm">Valid</span>
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    Prescribed: Metformin 500mg (30 tablets)
-                    <br />
-                    Patient: Rahul Sharma • Valid until: 15/12/2023
-                  </div>
-                </div>
-                {/* More prescription validations */}
+                {loadingPrescriptions ? (
+                  <div>Loading prescriptions...</div>
+                ) : errorPrescriptions ? (
+                  <div className="text-red-500">{errorPrescriptions}</div>
+                ) : prescriptions.length === 0 ? (
+                  <div>No prescriptions found for this pharmacy.</div>
+                ) : (
+                  prescriptions.map((p, idx) => (
+                    <PrescriptionItem
+                      key={p._id || idx}
+                      doctor={p.doctorId?.name || "-"}
+                      date={p.date}
+                      pharmacy={profile.name}
+                      medicines={p.medicines}
+                      notes={p.notes}
+                      status={"Valid"}
+                    />
+                  ))
+                )}
               </div>
             </div>
           </div>

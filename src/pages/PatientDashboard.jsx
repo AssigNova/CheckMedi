@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   CalendarIcon,
   UserCircleIcon,
@@ -9,6 +9,7 @@ import {
   TruckIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/outline";
+import axios from "axios";
 
 import BenefitItem from "../components/BenefitItem";
 import StatCard from "../components/StatCard";
@@ -23,9 +24,31 @@ import WrapperCard from "../Templates/WrapperCard";
 export default function PatientDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [prescriptionFilter, setPrescriptionFilter] = useState("active");
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [loadingPrescriptions, setLoadingPrescriptions] = useState(false);
+  const [errorPrescriptions, setErrorPrescriptions] = useState("");
 
   // Use profile for health summary instead of patientProfile
   const healthSummary = profile?.healthSummary || {};
+
+  useEffect(() => {
+    async function fetchPrescriptions() {
+      setLoadingPrescriptions(true);
+      setErrorPrescriptions("");
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get(`/api/prescriptions/patient/${profile._id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setPrescriptions(res.data);
+      } catch (err) {
+        setErrorPrescriptions(err.response?.data?.error || "Failed to load prescriptions");
+      } finally {
+        setLoadingPrescriptions(false);
+      }
+    }
+    if (profile?._id) fetchPrescriptions();
+  }, [profile]);
 
   if (!profile) return null;
 
@@ -137,8 +160,31 @@ export default function PatientDashboard({ profile }) {
               }
             >
               <div className="space-y-4">
-                <PrescriptionItem medication="Metformin 500mg" dosage="Twice daily after meals" status="Active" refills="2 remaining" />
-                {/* More prescription items */}
+                {loadingPrescriptions ? (
+                  <div>Loading prescriptions...</div>
+                ) : errorPrescriptions ? (
+                  <div className="text-red-500">{errorPrescriptions}</div>
+                ) : prescriptions.length === 0 ? (
+                  <div>No prescriptions found.</div>
+                ) : (
+                  prescriptions
+                    .filter((p) =>
+                      prescriptionFilter === "active"
+                        ? new Date(p.date) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) // last 30 days as active
+                        : new Date(p.date) <= new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+                    )
+                    .map((p, idx) => (
+                      <PrescriptionItem
+                        key={p._id || idx}
+                        doctor={p.doctorId?.name || "-"}
+                        date={p.date}
+                        pharmacy={p.pharmacyId?.name || "-"}
+                        medicines={p.medicines}
+                        notes={p.notes}
+                        status={prescriptionFilter === "active" ? "Active" : "History"}
+                      />
+                    ))
+                )}
               </div>
             </WrapperCard>
           </div>

@@ -17,6 +17,7 @@ import AppointmentList from "../components/AppointmentList";
 import StatCard from "../components/StatCard";
 import SideBar from "../Templates/SideBar";
 import WrapperCard from "../Templates/WrapperCard";
+import DoctorPatientsPage from "./DoctorPatientsPage";
 
 export default function DoctorDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("overview");
@@ -112,6 +113,9 @@ export default function DoctorDashboard({ profile }) {
 
           {/* My Appointments Section */}
           <AppointmentList role="Doctor" setScheduleView={setScheduleView} scheduleView={scheduleView} />
+
+          {/* Render DoctorPatientsPage when 'patients' tab is active */}
+          {activeTab === "patients" && <DoctorPatientsPage doctorId={profile._id} />}
 
           {/* Stats Footer */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
