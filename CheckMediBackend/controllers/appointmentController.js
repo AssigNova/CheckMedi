@@ -14,7 +14,7 @@ exports.createAppointment = async (req, res) => {
     if (conflict) {
       return res.status(409).json({ error: "Doctor already has an appointment at this time" });
     }
-    const appointment = new Appointment({ patient, doctor, date, type, notes });
+    const appointment = new Appointment({ patient, doctor, date, type, notes, status: "pending" });
     await appointment.save();
     res.status(201).json(appointment);
   } catch (err) {
@@ -51,9 +51,10 @@ exports.updateAppointment = async (req, res) => {
     if (appointment.patient.toString() !== userId && appointment.doctor.toString() !== userId) {
       return res.status(403).json({ error: "Unauthorized" });
     }
-    // Only doctor can confirm/complete, patient can cancel
+    // Only doctor can approve/reject/complete, patient can cancel
     if (status) {
-      if (status === "confirmed" && role !== "Doctor") return res.status(403).json({ error: "Only doctor can confirm" });
+      if (status === "approved" && role !== "Doctor") return res.status(403).json({ error: "Only doctor can approve" });
+      if (status === "rejected" && role !== "Doctor") return res.status(403).json({ error: "Only doctor can reject" });
       if (status === "completed" && role !== "Doctor") return res.status(403).json({ error: "Only doctor can complete" });
       if (status === "cancelled" && !["Doctor", "Patient"].includes(role)) return res.status(403).json({ error: "Unauthorized to cancel" });
       appointment.status = status;

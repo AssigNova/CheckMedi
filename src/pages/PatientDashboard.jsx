@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
 import {
   CalendarIcon,
   UserCircleIcon,
@@ -21,10 +20,12 @@ import AppointmentList from "../components/AppointmentList";
 import SideBar from "../Templates/SideBar";
 import WrapperCard from "../Templates/WrapperCard";
 
-export default function PatientDashboard() {
-  const profile = useLoaderData();
+export default function PatientDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [prescriptionFilter, setPrescriptionFilter] = useState("active");
+
+  // Use profile for health summary instead of patientProfile
+  const healthSummary = profile?.healthSummary || {};
 
   if (!profile) return null;
 
@@ -66,27 +67,20 @@ export default function PatientDashboard() {
 
           {/* Health Overview */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <StatCard title="Last BP Reading" value={patientProfile?.healthSummary?.lastBpReading || "N/A"} trend="Normal" color="green" />
+            <StatCard title="Last BP Reading" value={healthSummary.lastBpReading || "N/A"} trend="Normal" color="green" />
             <StatCard
               title="Active Medications"
-              value={patientProfile?.healthSummary?.activeMedicationsCount?.toString() || "N/A"}
+              value={healthSummary.activeMedicationsCount?.toString() || "N/A"}
               trend="All current"
               color="blue"
             />
             <StatCard
               title="Next Checkup"
-              value={
-                patientProfile ? `${patientProfile.healthSummary.nextCheckupDate} (${patientProfile.healthSummary.nextCheckupType})` : "N/A"
-              }
-              trend={patientProfile?.healthSummary?.nextCheckupType || ""}
+              value={healthSummary.nextCheckupDate ? `${healthSummary.nextCheckupDate} (${healthSummary.nextCheckupType})` : "N/A"}
+              trend={healthSummary.nextCheckupType || ""}
               color="purple"
             />
-            <StatCard
-              title="Wellness Score"
-              value={patientProfile?.healthSummary?.wellnessScore || "N/A"}
-              trend="Excellent"
-              color="orange"
-            />
+            <StatCard title="Wellness Score" value={healthSummary.wellnessScore || "N/A"} trend="Excellent" color="orange" />
           </div>
 
           {/* Upcoming Appointments */}

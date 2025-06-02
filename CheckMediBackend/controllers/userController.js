@@ -124,12 +124,18 @@ exports.updatePreferences = async (req, res) => {
   }
 };
 
-// GET /api/user?role=Doctor - List all doctors
+// GET /api/user?role=Doctor - List all doctors with full details for appointment booking
 exports.listUsers = async (req, res) => {
   try {
     const { role } = req.query;
     const filter = role ? { role } : {};
-    const users = await User.find(filter).select("_id name email role");
+    // For doctors, return all relevant fields for appointment booking
+    let projection =
+      "_id name email role specialization experience qualifications bio photoUrl overallRating consultationFee languagesSpoken availabilitySummary affiliations";
+    if (role !== "Doctor") {
+      projection = "_id name email role";
+    }
+    const users = await User.find(filter).select(projection);
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 export default function Signup() {
   const { login } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "", role: "Patient" });
+  const [doctorDetails, setDoctorDetails] = useState({ specialization: "", experience: "", qualifications: "", bio: "" });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -19,15 +20,24 @@ export default function Signup() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Handle doctor-specific details
+  const handleDoctorDetailsChange = (e) => {
+    setDoctorDetails({ ...doctorDetails, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    let submitData = { ...form };
+    if (form.role === "Doctor") {
+      submitData = { ...form, ...doctorDetails };
+    }
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(submitData),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Signup failed");
@@ -74,6 +84,44 @@ export default function Signup() {
           <option value="Doctor">Doctor</option>
           <option value="Pharmacy">Pharmacy</option>
         </select>
+        {/* Doctor extra fields */}
+        {form.role === "Doctor" && (
+          <div className="mb-4">
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="specialization"
+              placeholder="Specialization (e.g. Cardiologist)"
+              value={doctorDetails.specialization}
+              onChange={handleDoctorDetailsChange}
+              required
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="experience"
+              type="number"
+              placeholder="Years of Experience"
+              value={doctorDetails.experience}
+              onChange={handleDoctorDetailsChange}
+              required
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="qualifications"
+              placeholder="Qualifications (e.g. MBBS, MD)"
+              value={doctorDetails.qualifications}
+              onChange={handleDoctorDetailsChange}
+              required
+            />
+            <textarea
+              className="w-full p-2 mb-2 border rounded"
+              name="bio"
+              placeholder="Short Bio"
+              value={doctorDetails.bio}
+              onChange={handleDoctorDetailsChange}
+              required
+            />
+          </div>
+        )}
         {error && <div className="text-red-500 mb-2">{error}</div>}
         {success && <div className="text-green-600 mb-2">{success}</div>}
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">

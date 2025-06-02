@@ -11,7 +11,7 @@ function generateToken(user) {
 
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, specialization, experience, qualifications, bio } = req.body;
     if (!name || !email || !password || !role) {
       return res.status(400).json({ error: "All fields are required" });
     }
@@ -20,7 +20,15 @@ exports.register = async (req, res) => {
       return res.status(409).json({ error: "Email already registered" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword, role });
+    // Add doctor fields if role is Doctor
+    const userData = { name, email, password: hashedPassword, role };
+    if (role === "Doctor") {
+      userData.specialization = specialization;
+      userData.experience = experience;
+      userData.qualifications = qualifications;
+      userData.bio = bio;
+    }
+    const user = new User(userData);
     await user.save();
     const token = generateToken(user);
     res.status(201).json({ token, user: { id: user._id, name, email, role } });

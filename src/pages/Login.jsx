@@ -32,8 +32,8 @@ export default function Login() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
       login(data.token);
-      setSuccess("Login successful! Redirecting to patient dashboard...");
-      setTimeout(() => navigate("/patient"), 1200);
+      setSuccess("Login successful! Redirecting to dashboard...");
+      setTimeout(() => navigate("/dashboard"), 1200);
     } catch (err) {
       setError(err.message);
     }

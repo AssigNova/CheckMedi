@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import Appointment from "./Appointment";
+import WrapperCard from "../Templates/WrapperCard";
 
-export default function AppointmentList({ role }) {
+export default function AppointmentList({ role, setScheduleView, scheduleView }) {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -32,34 +34,66 @@ export default function AppointmentList({ role }) {
   if (!appointments.length) return <div className="text-center mt-6">No appointments found.</div>;
 
   return (
-    <div className="overflow-x-auto mt-6">
-      <table className="w-full bg-white rounded shadow-md">
-        <thead>
-          <tr className="text-left text-gray-500 border-b">
-            <th className="pb-3">Doctor</th>
-            <th className="pb-3">Patient</th>
-            <th className="pb-3">Date & Time</th>
-            <th className="pb-3">Type</th>
-            <th className="pb-3">Status</th>
-            <th className="pb-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map((appt) => (
-            <tr key={appt._id} className="border-b hover:bg-gray-50">
-              <td>{appt.doctor?.name || "-"}</td>
-              <td>{appt.patient?.name || "-"}</td>
-              <td>{new Date(appt.date).toLocaleString()}</td>
-              <td>{appt.type}</td>
-              <td>{appt.status}</td>
-              <td>
-                <ManageAppointmentButton appt={appt} role={role} onAction={() => window.location.reload()} />
-              </td>
+    <WrapperCard
+      heading={"Consultation Schedule"}
+      options={
+        <div className="flex space-x-2">
+          <button
+            onClick={() => setScheduleView("upcoming")}
+            className={`px-4 py-2 rounded-lg ${scheduleView === "upcoming" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}
+          >
+            Upcoming
+          </button>
+          <button
+            onClick={() => setScheduleView("past")}
+            className={`px-4 py-2 rounded-lg ${scheduleView === "past" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}
+          >
+            Past Consultations
+          </button>
+        </div>
+      }
+    >
+      <div className="overflow-x-auto mt-6">
+        <table className="w-full bg-white rounded shadow-md">
+          <thead>
+            <tr className="text-left text-gray-500 border-b">
+              <th className="pb-3">Doctor</th>
+              <th className="pb-3">Patient</th>
+              <th className="pb-3">Date & Time</th>
+              <th className="pb-3">Type</th>
+              <th className="pb-3">Status</th>
+              <th className="pb-3">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {appointments.map((appt) => (
+              <Appointment
+                key={appt._id}
+                values={[
+                  { text: appt.doctor?.name || "-", color: "" },
+                  { text: appt.patient?.name || "-", color: "" },
+                  { text: new Date(appt.date).toLocaleString(), color: "" },
+                  { text: appt.type, color: "blue" },
+                  {
+                    text: appt.status,
+                    color:
+                      appt.status === "confirmed"
+                        ? "green"
+                        : appt.status === "pending"
+                        ? "yellow"
+                        : appt.status === "cancelled"
+                        ? "red"
+                        : "",
+                  },
+                  { text: "", color: "" }, // Placeholder for actions
+                ]}
+                actions={<ManageAppointmentButton appt={appt} role={role} onAction={() => window.location.reload()} />}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </WrapperCard>
   );
 }
 

@@ -13,6 +13,11 @@ const UserSchema = new mongoose.Schema({
     timezone: { type: String, default: "UTC" },
   },
   license: { type: String }, // For Doctor/Pharmacy
+  // Doctor-specific fields
+  specialization: { type: String },
+  experience: { type: Number },
+  qualifications: { type: String },
+  bio: { type: String },
   createdAt: { type: Date, default: Date.now },
   resetPasswordToken: String,
   resetPasswordExpires: Date,

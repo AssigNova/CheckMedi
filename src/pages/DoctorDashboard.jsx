@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   UserGroupIcon,
   ClockIcon,
@@ -110,67 +110,8 @@ export default function DoctorDashboard({ profile }) {
             </WrapperCard>
           </div>
 
-          {/* Consultation Schedule */}
-          <WrapperCard
-            heading={"Consultation Schedule"}
-            options={
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => setScheduleView("upcoming")}
-                  className={`px-4 py-2 rounded-lg ${
-                    scheduleView === "upcoming" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"
-                  }`}
-                >
-                  Upcoming
-                </button>
-                <button
-                  onClick={() => setScheduleView("past")}
-                  className={`px-4 py-2 rounded-lg ${
-                    scheduleView === "past" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"
-                  }`}
-                >
-                  Past Consultations
-                </button>
-              </div>
-            }
-          >
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="text-left text-gray-500 border-b">
-                    <th className="pb-3">Patient</th>
-                    <th className="pb-3">Time</th>
-                    <th className="pb-3">Type</th>
-                    <th className="pb-3">Status</th>
-                    <th className="pb-3">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <Appointment
-                    values={[
-                      { text: "Rahul Sharma", color: "" },
-                      { text: "Today 3:00 PM", color: "" },
-                      { text: "Video", color: "blue" },
-                      { text: "Confirmed", color: "green" },
-                    ]}
-                  />
-                  <Appointment
-                    values={[
-                      { text: "Ankit Sharma", color: "" },
-                      { text: "Today 4:00 PM", color: "" },
-                      { text: "Video", color: "blue" },
-                      { text: "Pending", color: "red" },
-                    ]}
-                  />
-                  {/* More rows */}
-                </tbody>
-              </table>
-            </div>
-          </WrapperCard>
-
           {/* My Appointments Section */}
-          <h2 className="text-2xl font-bold mb-6">My Appointments</h2>
-          <AppointmentList role="Doctor" />
+          <AppointmentList role="Doctor" setScheduleView={setScheduleView} scheduleView={scheduleView} />
 
           {/* Stats Footer */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">

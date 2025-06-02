@@ -15,61 +15,22 @@ const gridStyle = {
 };
 
 export default function BookAppointmentPage() {
-  const mockDoctors = [
-    {
-      id: "doc001",
-      name: "Dr. Emily Carter",
-      specialization: "Cardiologist",
-      experience: 12,
-      qualifications: "MD, FACC",
-      affiliations: ["City General Hospital", "Heart & Vascular Clinic"],
-      photoUrl: "https://via.placeholder.com/100/007bff/ffffff?Text=Dr.EC",
-      overallRating: 4.8,
-      consultationFee: 1500,
-      languagesSpoken: ["English", "Hindi"],
-      bio: "Dr. Carter is a renowned cardiologist...",
-      availabilitySummary: "Mon, Wed, Fri (9 AM - 5 PM)",
-    },
-    {
-      id: "doc002",
-      name: "Dr. Arjun Mehta",
-      specialization: "Pediatrician",
-      experience: 8,
-      qualifications: "MBBS, DCH",
-      affiliations: ["KidsCare Children's Hospital"],
-      photoUrl: "https://via.placeholder.com/100/28a745/ffffff?Text=Dr.AM",
-      overallRating: 4.9,
-      consultationFee: 1200,
-      languagesSpoken: ["English", "Marathi", "Hindi"],
-      bio: "Dr. Mehta is a compassionate pediatrician...",
-      availabilitySummary: "Tue, Thu (10 AM - 6 PM), Sat (9 AM - 1 PM)",
-    },
-    {
-      id: "doc003",
-      name: "Dr. Priya Sharma",
-      specialization: "Dermatologist",
-      experience: 7,
-      qualifications: "MD, DNB (Dermatology)",
-      affiliations: ["Skin & Wellness Clinic"],
-      photoUrl: "https://via.placeholder.com/100/ffc107/000000?Text=Dr.PS",
-      overallRating: 4.7,
-      consultationFee: 1000,
-      languagesSpoken: ["English", "Hindi", "Punjabi"],
-      bio: "Dr. Sharma specializes in clinical and cosmetic dermatology...",
-      availabilitySummary: "Mon - Sat (11 AM - 7 PM)",
-    },
-  ];
-
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    const fetchDoctors = () => {
-      setTimeout(() => {
-        setDoctors(mockDoctors);
+    const fetchDoctors = async () => {
+      try {
+        const res = await fetch("/api/user?role=Doctor");
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to fetch doctors");
+        setDoctors(data);
+      } catch (err) {
+        setDoctors([]);
+      } finally {
         setLoading(false);
-      }, 1000); // Simulate 1-second delay
+      }
     };
     fetchDoctors();
   }, []);
@@ -82,7 +43,6 @@ export default function BookAppointmentPage() {
       <p style={{ textAlign: "center", marginBottom: "24px", color: "#374151", fontSize: "1rem" }}>
         Find the right doctor for your needs and schedule your consultation.
       </p>
-
       <div style={{ marginBottom: "24px", display: "flex", justifyContent: "center" }}>
         <input
           type="text"
@@ -96,12 +56,11 @@ export default function BookAppointmentPage() {
           }}
         />
       </div>
-
       <div style={gridStyle}>
         {loading ? (
           <p style={{ textAlign: "center", fontSize: "1rem", color: "#4b5563", padding: "40px", width: "100%" }}>Loading doctors...</p>
         ) : doctors.length > 0 ? (
-          doctors.map((doctor) => <DoctorCard key={doctor.id} doctor={doctor} />)
+          doctors.map((doctor) => <DoctorCard key={doctor._id} doctor={doctor} />)
         ) : (
           <p style={{ textAlign: "center", fontSize: "1rem", color: "#4b5563", padding: "40px", width: "100%" }}>
             No doctors available at the moment.
