@@ -60,10 +60,9 @@ export default function PatientDashboard({ profile }) {
         <SideBar
           values={[
             { id: "dashboard", icon: HeartIcon, label: "Health Dashboard" },
-            { id: "appointments", icon: CalendarIcon, label: "Appointments" },
-            { id: "prescriptions", icon: DocumentTextIcon, label: "Prescriptions" },
-            { id: "profile", icon: UserCircleIcon, label: "Profile" },
             { id: "book-appointment", icon: CalendarIcon, label: "Book Appointment", link: "/book-appointment" },
+            { id: "prescriptions", icon: DocumentTextIcon, label: "Prescriptions", link: "/prescriptions" },
+            { id: "profile", icon: UserCircleIcon, label: "Profile" },
           ]}
           heading="CheckMedi"
           text="Patient Portal"

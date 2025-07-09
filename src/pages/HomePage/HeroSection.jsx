@@ -104,7 +104,7 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
         >
-          <a href="/patient">
+          <a href="/dashboard">
             <motion.button
               className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 flex items-center gap-2"
               whileHover={{ scale: 1.1 }}
@@ -113,7 +113,7 @@ export default function HeroSection() {
               I am a Patient
             </motion.button>
           </a>
-          <a href="/doctor">
+          <a href="/dashboard">
             <motion.button
               className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 flex items-center gap-2"
               whileHover={{ scale: 1.1 }}
@@ -122,7 +122,7 @@ export default function HeroSection() {
               Doctor's Cabin
             </motion.button>
           </a>
-          <a href="/pharmacy">
+          <a href="/dashboard">
             <motion.button
               className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 flex items-center gap-2"
               whileHover={{ scale: 1.1 }}

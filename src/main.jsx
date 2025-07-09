@@ -21,6 +21,8 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import BookAppointmentPage from "./pages/BookAppointmentPage.jsx";
 import HospitalsListingPage from "./pages/Dummy/HospitalsListingPage.jsx";
 import PharmaciesListingPage from "./pages/Dummy/PharmaciesPage.jsx";
+import PatientPrescriptionsPage from "./pages/Prescription/PatientPrescriptionsPage.jsx";
+import SinglePrescriptionPage from "./pages/Prescription/SinglePrescriptionPage.jsx";
 
 // Loader for patient profile
 const fetchPatientProfile = async () => {
@@ -110,6 +112,18 @@ const router = createBrowserRouter([
       {
         path: "pharmacies-list",
         element: <PharmaciesListingPage />,
+      },
+      {
+        path: "prescriptions",
+        element: <PatientPrescriptionsPage />,
+      },
+      {
+        path: "single-prescription",
+        element: <SinglePrescriptionPage />,
+      },
+      {
+        path: "prescription/:id",
+        element: <SinglePrescriptionPage />,
       },
     ],
   },

@@ -7,6 +7,11 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem("token"));
+    const handleStorage = () => {
+      setLoggedIn(!!localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
   const login = (token) => {
