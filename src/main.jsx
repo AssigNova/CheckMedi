@@ -1,50 +1,122 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
+import ReactDOM from "react-dom/client";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
 import App from "./App.jsx";
-import LandingPage from "./pages/LandingPage.jsx";
-import PatientDashboard from "./pages/PatientDashboard.jsx";
-import DoctorDashboard from "./pages/DoctorDashboard.jsx";
-import PharmacyDashboard from "./pages/PharmacyDashboard.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
-import BookAppointmentPage from "./pages/BookAppointmentPage";
+import "./index.css";
+
+import LandingPage from "./pages/LandingPage";
+import HeroSection from "./pages/OldLandingPage.jsx";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import PatientDashboard from "./pages/PatientDashboard";
+import PharmacyDashboard from "./pages/PharmacyDashboard";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login.jsx";
+import Profile from "./pages/Profile";
+import Jobs from "./pages/Jobs.jsx";
+import Navbar from "./Templates/Navbar.jsx";
+import Articles from "./pages/Articles.jsx";
+import UpdateProfile from "./pages/UpdateProfile.jsx";
+import DashboardRouter from "./pages/DashboardRouter.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import BookAppointmentPage from "./pages/BookAppointmentPage.jsx";
+import HospitalsListingPage from "./pages/Dummy/HospitalsListingPage.jsx";
+import PharmaciesListingPage from "./pages/Dummy/PharmaciesPage.jsx";
+
+// Loader for patient profile
+const fetchPatientProfile = async () => {
+  const token = localStorage.getItem("token");
+  const res = await fetch("/api/user/profile", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Failed to fetch profile");
+  return res.json();
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <>
+        <Navbar />
+        <App />
+      </>
+    ),
     children: [
+      // {
+      //   path: "",
+      //   element: <Home />,
+      // },
+
+      //
+      // Bill Section ------------------------------------------------------------------------------------------------
+      //
       {
         path: "/",
         element: <LandingPage />,
       },
       {
-        path: "/patient",
-        element: <PatientDashboard />,
+        path: "LandingPage",
+        element: <HeroSection />,
       },
       {
-        path: "/doctor",
+        path: "article",
+        element: <Articles />,
+      },
+      {
+        path: "patient",
+        element: <PatientDashboard />,
+        loader: fetchPatientProfile,
+      },
+      {
+        path: "doctor",
         element: <DoctorDashboard />,
       },
       {
-        path: "/pharmacy",
+        path: "jobs",
+        element: <Jobs />,
+      },
+      {
+        path: "pharmacy",
         element: <PharmacyDashboard />,
       },
       {
-        path: "/login",
-        element: <LoginPage />,
+        path: "signup",
+        element: <Signup />,
       },
       {
-        path: "/book-appointment",
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "update-profile",
+        element: <UpdateProfile />,
+      },
+      {
+        path: "dashboard",
+        element: <DashboardRouter />,
+      },
+      {
+        path: "book-appointment",
         element: <BookAppointmentPage />,
+      },
+      {
+        path: "hospitals-list",
+        element: <HospitalsListingPage />,
+      },
+      {
+        path: "pharmacies-list",
+        element: <PharmaciesListingPage />,
       },
     ],
   },
 ]);
 
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <AuthProvider>
     <RouterProvider router={router} />
-  </StrictMode>
+  </AuthProvider>
 );

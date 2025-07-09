@@ -11,7 +11,29 @@ function generateToken(user) {
 
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, role, specialization, experience, qualifications, bio } = req.body;
+    const {
+      name,
+      email,
+      password,
+      role,
+      specialization,
+      experience,
+      qualifications,
+      bio,
+      photoUrl,
+      languagesSpoken,
+      consultationFee,
+      availabilitySummary,
+      affiliations,
+      awards,
+      memberships,
+      address,
+      phone,
+      gender,
+      overallRating,
+      about,
+      socialLinks,
+    } = req.body;
     if (!name || !email || !password || !role) {
       return res.status(400).json({ error: "All fields are required" });
     }
@@ -27,6 +49,19 @@ exports.register = async (req, res) => {
       userData.experience = experience;
       userData.qualifications = qualifications;
       userData.bio = bio;
+      userData.photoUrl = photoUrl;
+      userData.languagesSpoken = languagesSpoken;
+      userData.consultationFee = consultationFee;
+      userData.availabilitySummary = availabilitySummary;
+      userData.affiliations = affiliations;
+      userData.awards = awards;
+      userData.memberships = memberships;
+      userData.address = address;
+      userData.phone = phone;
+      userData.gender = gender;
+      userData.overallRating = overallRating;
+      userData.about = about;
+      userData.socialLinks = socialLinks;
     }
     const user = new User(userData);
     await user.save();

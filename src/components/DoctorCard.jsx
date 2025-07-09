@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import DoctorProfileModal from "./DoctorProfileModal";
+import BookAppointment from "./BookAppointment";
 
 // Refined styles
 const cardStyle = {
@@ -42,38 +44,8 @@ const buttonStyle = {
 // This would typically be handled by CSS classes or a styling library.
 
 export default function DoctorCard({ doctor }) {
+  const [showProfile, setShowProfile] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [date, setDate] = useState("");
-  const [type, setType] = useState("");
-  const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
-
-  const handleBook = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-    setSuccess("");
-    try {
-      const res = await fetch("/api/appointments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ doctor: doctor._id, date, type, notes }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Booking failed");
-      setSuccess("Appointment requested! Awaiting doctor's approval.");
-      setShowForm(false);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (!doctor) {
     return <div style={cardStyle}>Loading doctor details...</div>;
@@ -97,10 +69,13 @@ export default function DoctorCard({ doctor }) {
         style={buttonStyle}
         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#2563eb")}
         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#3b82f6")}
-        onClick={() => setShowForm(true)}
+        onClick={() => setShowProfile(true)}
       >
         View Profile & Book
       </button>
+      {showProfile && (
+        <DoctorProfileModal doctor={doctor} open={showProfile} onClose={() => setShowProfile(false)} onBook={() => setShowForm(true)} />
+      )}
       {showForm && (
         <div
           style={{
@@ -113,58 +88,37 @@ export default function DoctorCard({ doctor }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 1000,
+            zIndex: 1100,
           }}
         >
-          <form
-            onSubmit={handleBook}
-            style={{ background: "white", padding: 32, borderRadius: 8, minWidth: 320, boxShadow: "0 2px 8px rgba(0,0,0,0.2)" }}
-          >
-            <h3 style={{ marginBottom: 16 }}>Book Appointment with Dr. {doctor.name}</h3>
-            <label>
-              Date & Time:
-              <br />
-              <input
-                type="datetime-local"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                required
-                style={{ width: "100%", marginBottom: 12 }}
-              />
-            </label>
-            <label>
-              Type:
-              <br />
-              <select value={type} onChange={(e) => setType(e.target.value)} required style={{ width: "100%", marginBottom: 12 }}>
-                <option value="">Select type</option>
-                <option value="video">Video</option>
-                <option value="in-person">In-person</option>
-              </select>
-            </label>
-            <label>
-              Notes:
-              <br />
-              <textarea value={notes} onChange={(e) => setNotes(e.target.value)} style={{ width: "100%", marginBottom: 12 }} />
-            </label>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <button
-                type="button"
-                onClick={() => setShowForm(false)}
-                style={{ background: "#e5e7eb", color: "#111827", border: "none", borderRadius: 4, padding: "8px 16px" }}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                style={{ background: "#3b82f6", color: "white", border: "none", borderRadius: 4, padding: "8px 16px" }}
-                disabled={loading}
-              >
-                {loading ? "Booking..." : "Book"}
-              </button>
-            </div>
-            {error && <div style={{ color: "red", marginTop: 8 }}>{error}</div>}
-            {success && <div style={{ color: "green", marginTop: 8 }}>{success}</div>}
-          </form>
+          <div style={{ width: "100%", maxWidth: 520, position: "relative" }}>
+            <button
+              onClick={() => setShowForm(false)}
+              aria-label="Close"
+              style={{
+                position: "absolute",
+                top: 12,
+                right: 16,
+                background: "none",
+                border: "none",
+                fontSize: 32,
+                color: "#888",
+                cursor: "pointer",
+                zIndex: 10,
+              }}
+            >
+              &times;
+            </button>
+            <BookAppointment
+              doctor={doctor}
+              forceDoctor={doctor}
+              onClose={() => setShowForm(false)}
+              onBooked={() => {
+                setShowForm(false);
+                setShowProfile(false);
+              }}
+            />
+          </div>
         </div>
       )}
     </div>

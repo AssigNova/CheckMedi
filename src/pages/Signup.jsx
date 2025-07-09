@@ -5,7 +5,28 @@ import { useAuth } from "../context/AuthContext.jsx";
 export default function Signup() {
   const { login } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "", role: "Patient" });
-  const [doctorDetails, setDoctorDetails] = useState({ specialization: "", experience: "", qualifications: "", bio: "" });
+  const [doctorDetails, setDoctorDetails] = useState({
+    specialization: "",
+    experience: "",
+    qualifications: "",
+    bio: "",
+    photoUrl: "",
+    languagesSpoken: "",
+    consultationFee: "",
+    availabilitySummary: "",
+    affiliations: "",
+    awards: "",
+    memberships: "",
+    address: "",
+    phone: "",
+    gender: "",
+    about: "",
+    website: "",
+    linkedin: "",
+    twitter: "",
+    facebook: "",
+    instagram: "",
+  });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -30,8 +51,35 @@ export default function Signup() {
     setError("");
     setSuccess("");
     let submitData = { ...form };
+    // In handleSubmit, map new fields for doctor
     if (form.role === "Doctor") {
-      submitData = { ...form, ...doctorDetails };
+      submitData = {
+        ...form,
+        ...doctorDetails,
+        languagesSpoken: doctorDetails.languagesSpoken
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        affiliations: doctorDetails.affiliations
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        awards: doctorDetails.awards
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        memberships: doctorDetails.memberships
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        socialLinks: {
+          website: doctorDetails.website,
+          linkedin: doctorDetails.linkedin,
+          twitter: doctorDetails.twitter,
+          facebook: doctorDetails.facebook,
+          instagram: doctorDetails.instagram,
+        },
+      };
     }
     try {
       const res = await fetch("/api/auth/register", {
@@ -119,6 +167,119 @@ export default function Signup() {
               value={doctorDetails.bio}
               onChange={handleDoctorDetailsChange}
               required
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="photoUrl"
+              placeholder="Profile Photo URL"
+              value={doctorDetails.photoUrl}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="languagesSpoken"
+              placeholder="Languages Spoken (comma separated)"
+              value={doctorDetails.languagesSpoken}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="consultationFee"
+              type="number"
+              placeholder="Consultation Fee (INR)"
+              value={doctorDetails.consultationFee}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="availabilitySummary"
+              placeholder="Availability (e.g. Mon-Fri 10am-5pm)"
+              value={doctorDetails.availabilitySummary}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="affiliations"
+              placeholder="Affiliations (comma separated)"
+              value={doctorDetails.affiliations}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="awards"
+              placeholder="Awards (comma separated)"
+              value={doctorDetails.awards}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="memberships"
+              placeholder="Memberships (comma separated)"
+              value={doctorDetails.memberships}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="address"
+              placeholder="Clinic Address"
+              value={doctorDetails.address}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="phone"
+              placeholder="Phone Number"
+              value={doctorDetails.phone}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="gender"
+              placeholder="Gender"
+              value={doctorDetails.gender}
+              onChange={handleDoctorDetailsChange}
+            />
+            <textarea
+              className="w-full p-2 mb-2 border rounded"
+              name="about"
+              placeholder="About Doctor (detailed)"
+              value={doctorDetails.about}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="website"
+              placeholder="Website"
+              value={doctorDetails.website}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="linkedin"
+              placeholder="LinkedIn"
+              value={doctorDetails.linkedin}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="twitter"
+              placeholder="Twitter"
+              value={doctorDetails.twitter}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="facebook"
+              placeholder="Facebook"
+              value={doctorDetails.facebook}
+              onChange={handleDoctorDetailsChange}
+            />
+            <input
+              className="w-full p-2 mb-2 border rounded"
+              name="instagram"
+              placeholder="Instagram"
+              value={doctorDetails.instagram}
+              onChange={handleDoctorDetailsChange}
             />
           </div>
         )}
