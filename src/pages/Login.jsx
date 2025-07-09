@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import { apiUrl } from "../api";
 
 export default function Login() {
   const { login } = useAuth();
@@ -24,7 +25,7 @@ export default function Login() {
     setError("");
     setSuccess("");
     try {
-      const res = await fetch("https://checkmedibackend.onrender.com/api/auth/login", {
+      const res = await fetch(apiUrl("api/auth/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

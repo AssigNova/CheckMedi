@@ -10,6 +10,7 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/outline";
 import axios from "axios";
+import { apiUrl } from "../api";
 
 import BenefitItem from "../components/BenefitItem";
 import StatCard from "../components/StatCard";
@@ -37,7 +38,7 @@ export default function PatientDashboard({ profile }) {
       setErrorPrescriptions("");
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`/api/prescriptions/patient/${profile._id}`, {
+        const res = await axios.get(apiUrl(`api/prescriptions/patient/${profile._id}`), {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPrescriptions(res.data);

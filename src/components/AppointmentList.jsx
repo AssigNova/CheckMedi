@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Appointment from "./Appointment";
 import WrapperCard from "../Templates/WrapperCard";
 import PrescriptionModal from "./PrescriptionModal";
+import { apiUrl } from "../api";
 
 export default function AppointmentList({ role, setScheduleView, scheduleView }) {
   const [appointments, setAppointments] = useState([]);
@@ -14,7 +15,7 @@ export default function AppointmentList({ role, setScheduleView, scheduleView })
       setError("");
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("/api/appointments", {
+        const res = await fetch(apiUrl("api/appointments"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -109,7 +110,7 @@ function ManageAppointmentButton({ appt, role, onAction }) {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`/api/appointments/${appt._id}`, {
+      const res = await fetch(apiUrl(`api/appointments/${appt._id}`), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

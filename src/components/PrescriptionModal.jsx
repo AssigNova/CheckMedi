@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { apiUrl } from "../api";
 
 export default function PrescriptionModal({ open, onClose, appointment, doctorId, onSuccess }) {
   const [pharmacies, setPharmacies] = useState([]);
@@ -12,7 +13,7 @@ export default function PrescriptionModal({ open, onClose, appointment, doctorId
   useEffect(() => {
     if (open) {
       // Fetch pharmacies from User collection with role=Pharmacy
-      axios.get("/api/user?role=Pharmacy").then((res) => setPharmacies(res.data));
+      axios.get(apiUrl("api/user?role=Pharmacy")).then((res) => setPharmacies(res.data));
     }
   }, [open]);
 
@@ -34,7 +35,7 @@ export default function PrescriptionModal({ open, onClose, appointment, doctorId
     setLoading(true);
     setError("");
     try {
-      await axios.post("/api/prescriptions", {
+      await axios.post(apiUrl("api/prescriptions"), {
         doctorId,
         patientId: appointment.patient._id,
         appointmentId: appointment._id,

@@ -7,12 +7,12 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: "/", // Updated base path to match root deployment
   server: {
-    proxy: {
-      "/api": {
-        target: "https://checkmedibackend.onrender.com",
-        changeOrigin: true,
-        secure: false,
-      },
-    },
+    // proxy: {
+    //   "/api": {
+    //     target: "https://checkmedibackend.onrender.com",
+    //     changeOrigin: true,
+    //     secure: false,
+    //   },
+    // },
   },
 });

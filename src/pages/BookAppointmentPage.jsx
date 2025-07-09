@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DoctorCard from "../components/DoctorCard";
+import { apiUrl } from "../api";
 
 // Refined styles
 const pageStyle = {
@@ -22,7 +23,7 @@ export default function BookAppointmentPage() {
     setLoading(true);
     const fetchDoctors = async () => {
       try {
-        const res = await fetch("/api/user?role=Doctor");
+        const res = await fetch(apiUrl("api/user?role=Doctor"));
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to fetch doctors");
         setDoctors(data);

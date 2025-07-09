@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../api";
 
 const doctorFields = [
   { name: "name", label: "Name", type: "text" },
@@ -62,7 +63,7 @@ export default function UpdateProfile() {
       setError("");
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("/api/user/profile", {
+        const res = await fetch(apiUrl("api/user/profile"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -136,7 +137,7 @@ export default function UpdateProfile() {
     }
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("/api/user/profile", {
+      const res = await fetch(apiUrl("api/user/profile"), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

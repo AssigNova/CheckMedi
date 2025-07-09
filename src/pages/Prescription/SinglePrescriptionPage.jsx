@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from "../../api";
 
 export default function SinglePrescriptionPage() {
   const { id } = useParams();
@@ -14,7 +15,7 @@ export default function SinglePrescriptionPage() {
       setError("");
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`/api/prescriptions/${id}`, {
+        const res = await axios.get(apiUrl(`api/prescriptions/${id}`), {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPrescription(res.data);

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { apiUrl } from "../api";
 
 export default function BookAppointment({ onBooked, doctor, forceDoctor }) {
   const [doctors, setDoctors] = useState([]);
@@ -21,7 +22,7 @@ export default function BookAppointment({ onBooked, doctor, forceDoctor }) {
       setError("");
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("/api/user?role=Doctor", {
+        const res = await fetch(apiUrl("api/user?role=Doctor"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -47,7 +48,7 @@ export default function BookAppointment({ onBooked, doctor, forceDoctor }) {
     setSuccess("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("/api/appointments", {
+      const res = await fetch(apiUrl("api/appointments"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

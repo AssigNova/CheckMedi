@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PatientDashboard from "./PatientDashboard";
 import DoctorDashboard from "./DoctorDashboard";
 import PharmacyDashboard from "./PharmacyDashboard";
+import { apiUrl } from "../api";
 
 export default function DashboardRouter() {
   const [profile, setProfile] = useState(null);
@@ -17,7 +18,7 @@ export default function DashboardRouter() {
       try {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Not authenticated");
-        const res = await fetch("/api/user/profile", {
+        const res = await fetch(apiUrl("api/user/profile"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();

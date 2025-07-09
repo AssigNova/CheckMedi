@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { apiUrl } from "../api";
 
 export default function DoctorPatientsPage({ doctorId }) {
   const [patients, setPatients] = useState([]);
@@ -15,7 +16,7 @@ export default function DoctorPatientsPage({ doctorId }) {
       try {
         const token = localStorage.getItem("token");
         // Get all patients who had appointments with this doctor
-        const res = await axios.get(`/api/appointments`, {
+        const res = await axios.get(apiUrl("api/appointments"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         // Filter unique patients from appointments
@@ -46,7 +47,7 @@ export default function DoctorPatientsPage({ doctorId }) {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`/api/prescriptions/patient/${patient._id}`, {
+      const res = await axios.get(apiUrl(`api/prescriptions/patient/${patient._id}`), {
         headers: { Authorization: `Bearer ${token}` },
       });
       // Only show prescriptions written by this doctor

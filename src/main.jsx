@@ -23,11 +23,12 @@ import HospitalsListingPage from "./pages/Dummy/HospitalsListingPage.jsx";
 import PharmaciesListingPage from "./pages/Dummy/PharmaciesPage.jsx";
 import PatientPrescriptionsPage from "./pages/Prescription/PatientPrescriptionsPage.jsx";
 import SinglePrescriptionPage from "./pages/Prescription/SinglePrescriptionPage.jsx";
+import { apiUrl } from "./api";
 
 // Loader for patient profile
 const fetchPatientProfile = async () => {
   const token = localStorage.getItem("token");
-  const res = await fetch("/api/user/profile", {
+  const res = await fetch(apiUrl("api/user/profile"), {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error("Failed to fetch profile");

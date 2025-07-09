@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from "../../api";
 
 export default function PatientPrescriptionsPage() {
   const [profile, setProfile] = useState(null);
@@ -16,14 +17,14 @@ export default function PatientPrescriptionsPage() {
       try {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Not authenticated");
-        const res = await fetch("/api/user/profile", {
+        const res = await fetch(apiUrl("api/user/profile"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to fetch profile");
         setProfile(data);
         // Now fetch prescriptions for this patient
-        const presRes = await axios.get(`/api/prescriptions/patient/${data._id}`, {
+        const presRes = await axios.get(apiUrl(`api/prescriptions/patient/${data._id}`), {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPrescriptions(presRes.data);

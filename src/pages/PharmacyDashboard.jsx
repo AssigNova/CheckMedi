@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { TruckIcon, DocumentTextIcon, ChartBarIcon, ArchiveIcon } from "@heroicons/react/outline";
 import axios from "axios";
 
+import { apiUrl } from "../api";
+
 import SideBar from "../Templates/SideBar";
 import StatCard from "../components/StatCard";
 import PrescriptionItem from "../components/PrescriptionItem";
@@ -20,7 +22,7 @@ export default function PharmacyDashboard({ profile }) {
       setErrorPrescriptions("");
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`/api/prescriptions/pharmacy/${profile._id}`, {
+        const res = await axios.get(apiUrl(`api/prescriptions/pharmacy/${profile._id}`), {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPrescriptions(res.data);
