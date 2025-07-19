@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import DoctorCard from "../components/DoctorCard";
-import { apiUrl } from "../api";
+import DoctorCard from "../../components/appointments/DoctorCard";
+import { apiUrl } from "../../api";
 
 // Refined styles
 const pageStyle = {

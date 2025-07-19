@@ -11,12 +11,12 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/outline";
 
-import BenefitItem from "../components/BenefitItem";
-import Appointment from "../components/Appointment";
-import AppointmentList from "../components/AppointmentList";
-import StatCard from "../components/StatCard";
-import SideBar from "../Templates/SideBar";
-import WrapperCard from "../Templates/WrapperCard";
+import BenefitItem from "../../components/common/BenefitItem";
+import Appointment from "../../components/appointments/Appointment";
+import AppointmentList from "../../components/appointments/AppointmentList";
+import StatCard from "../../components/common/StatCard";
+import SideBar from "../../Templates/SideBar";
+import WrapperCard from "../../Templates/WrapperCard";
 import DoctorPatientsPage from "./DoctorPatientsPage";
 
 export default function DoctorDashboard({ profile }) {

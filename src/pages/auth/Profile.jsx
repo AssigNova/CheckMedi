@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiUrl } from "../api";
+import { apiUrl } from "../../api";
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
@@ -56,8 +56,7 @@ export default function Profile() {
         </div>
         <button
           className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 mt-4"
-          onClick={() => navigate("/update-profile")}
-        >
+          onClick={() => navigate("/update-profile")}>
           Edit Profile
         </button>
       </div>

@@ -69,8 +69,7 @@ export default function DoctorCard({ doctor }) {
         style={buttonStyle}
         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#2563eb")}
         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#3b82f6")}
-        onClick={() => setShowProfile(true)}
-      >
+        onClick={() => setShowProfile(true)}>
         View Profile & Book
       </button>
       {showProfile && (
@@ -89,8 +88,7 @@ export default function DoctorCard({ doctor }) {
             alignItems: "center",
             justifyContent: "center",
             zIndex: 1100,
-          }}
-        >
+          }}>
           <div style={{ width: "100%", maxWidth: 520, position: "relative" }}>
             <button
               onClick={() => setShowForm(false)}
@@ -105,8 +103,7 @@ export default function DoctorCard({ doctor }) {
                 color: "#888",
                 cursor: "pointer",
                 zIndex: 10,
-              }}
-            >
+              }}>
               &times;
             </button>
             <BookAppointment

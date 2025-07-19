@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
-import { apiUrl } from "../api";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { apiUrl } from "../../api";
 
 export default function Signup() {
   const { login } = useAuth();

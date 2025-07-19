@@ -1,9 +1,10 @@
 import mediCheck from "../assets/MediCheck.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
+import AuthContext from "../context/AuthContext.jsx";
+import { useContext } from "react";
 
 export default function Navbar() {
-  const { loggedIn, logout } = useAuth();
+  const { loggedIn, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleProfile = () => navigate("/profile");
@@ -40,8 +41,7 @@ export default function Navbar() {
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-400 ml-2"
-                  >
+                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-400 ml-2">
                     Logout
                   </button>
                 </div>
@@ -52,8 +52,7 @@ export default function Navbar() {
                   </button>
                   <button
                     onClick={handleSignup}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 ml-2"
-                  >
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 ml-2">
                     Sign Up
                   </button>
                 </div>

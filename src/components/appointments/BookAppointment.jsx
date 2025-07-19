@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { apiUrl } from "../api";
+import { apiUrl } from "../../api";
 
 export default function BookAppointment({ onBooked, doctor, forceDoctor }) {
   const [doctors, setDoctors] = useState([]);
@@ -72,8 +72,7 @@ export default function BookAppointment({ onBooked, doctor, forceDoctor }) {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-2">
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 md:p-12 border border-blue-100 animate-fadeIn"
-      >
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 md:p-12 border border-blue-100 animate-fadeIn">
         <h2 className="text-3xl font-extrabold text-blue-700 mb-8 text-center tracking-tight">Book an Appointment</h2>
         <div className="mb-6">
           <label className="block mb-2 font-semibold text-gray-700">Doctor</label>
@@ -83,8 +82,7 @@ export default function BookAppointment({ onBooked, doctor, forceDoctor }) {
             onChange={handleChange}
             required
             className="w-full border border-blue-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none bg-blue-50 text-gray-800"
-            disabled={!!forceDoctor}
-          >
+            disabled={!!forceDoctor}>
             <option value="">Select Doctor</option>
             {doctors.map((doc) => (
               <option key={doc._id} value={doc._id}>
@@ -148,8 +146,7 @@ export default function BookAppointment({ onBooked, doctor, forceDoctor }) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold text-lg shadow transition"
-        >
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold text-lg shadow transition">
           {loading ? "Booking..." : "Book Appointment"}
         </button>
       </form>

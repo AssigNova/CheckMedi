@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
-import { apiUrl } from "../api";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { apiUrl } from "../../api.js";
 
 export default function Login() {
   const { login } = useAuth();
@@ -31,8 +31,9 @@ export default function Login() {
         body: JSON.stringify(form),
       });
       const data = await res.json();
+      console.log(data);
       if (!res.ok) throw new Error(data.error || "Login failed");
-      login(data.token);
+      login(data);
       setSuccess("Login successful! Redirecting to dashboard...");
       setTimeout(() => navigate("/dashboard"), 1200);
     } catch (err) {

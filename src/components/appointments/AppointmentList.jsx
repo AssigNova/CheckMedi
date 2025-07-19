@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Appointment from "./Appointment";
-import WrapperCard from "../Templates/WrapperCard";
-import PrescriptionModal from "./PrescriptionModal";
-import { apiUrl } from "../api";
+import WrapperCard from "../../Templates/WrapperCard";
+import PrescriptionModal from "../prescriptions/PrescriptionModal";
+import { apiUrl } from "../../api";
 
 export default function AppointmentList({ role, setScheduleView, scheduleView }) {
   const [appointments, setAppointments] = useState([]);
@@ -42,19 +42,16 @@ export default function AppointmentList({ role, setScheduleView, scheduleView })
         <div className="flex space-x-2">
           <button
             onClick={() => setScheduleView("upcoming")}
-            className={`px-4 py-2 rounded-lg ${scheduleView === "upcoming" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}
-          >
+            className={`px-4 py-2 rounded-lg ${scheduleView === "upcoming" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}>
             Upcoming
           </button>
           <button
             onClick={() => setScheduleView("past")}
-            className={`px-4 py-2 rounded-lg ${scheduleView === "past" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}
-          >
+            className={`px-4 py-2 rounded-lg ${scheduleView === "past" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}>
             Past Consultations
           </button>
         </div>
-      }
-    >
+      }>
       <div className="overflow-x-auto mt-6">
         <table className="w-full bg-white rounded shadow-md">
           <thead>

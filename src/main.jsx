@@ -5,24 +5,23 @@ import App from "./App.jsx";
 import "./index.css";
 
 import LandingPage from "./pages/LandingPage";
-import HeroSection from "./pages/OldLandingPage.jsx";
-import DoctorDashboard from "./pages/DoctorDashboard";
-import PatientDashboard from "./pages/PatientDashboard";
-import PharmacyDashboard from "./pages/PharmacyDashboard";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login.jsx";
-import Profile from "./pages/Profile";
+import DoctorDashboard from "./pages/doctor/DoctorDashboard";
+import PatientDashboard from "./pages/patient/PatientDashboard.jsx";
+import PharmacyDashboard from "./pages/pharmacy/PharmacyDashboard.jsx";
+import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login.jsx";
+import Profile from "./pages/auth/Profile";
 import Jobs from "./pages/Jobs.jsx";
 import Navbar from "./Templates/Navbar.jsx";
 import Articles from "./pages/Articles.jsx";
-import UpdateProfile from "./pages/UpdateProfile.jsx";
+import UpdateProfile from "./pages/auth/UpdateProfile.jsx";
 import DashboardRouter from "./pages/DashboardRouter.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import BookAppointmentPage from "./pages/BookAppointmentPage.jsx";
+import BookAppointmentPage from "./pages/patient/BookAppointmentPage.jsx";
 import HospitalsListingPage from "./pages/Dummy/HospitalsListingPage.jsx";
 import PharmaciesListingPage from "./pages/Dummy/PharmaciesPage.jsx";
-import PatientPrescriptionsPage from "./pages/Prescription/PatientPrescriptionsPage.jsx";
-import SinglePrescriptionPage from "./pages/Prescription/SinglePrescriptionPage.jsx";
+import PatientPrescriptionsPage from "./pages/patient/PatientPrescriptionsPage.jsx";
+import SinglePrescriptionPage from "./pages/patient/SinglePrescriptionPage.jsx";
 import { apiUrl } from "./api";
 
 // Loader for patient profile
@@ -56,10 +55,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <LandingPage />,
-      },
-      {
-        path: "LandingPage",
-        element: <HeroSection />,
       },
       {
         path: "article",

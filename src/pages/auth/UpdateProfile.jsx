@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiUrl } from "../api";
+import { apiUrl } from "../../api";
 
 const doctorFields = [
   { name: "name", label: "Name", type: "text" },
@@ -171,8 +171,7 @@ export default function UpdateProfile() {
                 value={form[field.name] || ""}
                 onChange={handleChange}
                 required={field.name === "role"}
-                className="w-full border px-3 py-2 rounded"
-              >
+                className="w-full border px-3 py-2 rounded">
                 <option value="">Select {field.label}</option>
                 {field.options.map((opt) => (
                   <option key={opt} value={opt}>
@@ -208,8 +207,7 @@ export default function UpdateProfile() {
         <button
           type="button"
           onClick={() => navigate("/profile")}
-          className="w-full mt-3 bg-gray-200 text-gray-700 py-2 rounded font-semibold hover:bg-gray-300"
-        >
+          className="w-full mt-3 bg-gray-200 text-gray-700 py-2 rounded font-semibold hover:bg-gray-300">
           Cancel
         </button>
       </form>

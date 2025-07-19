@@ -10,17 +10,17 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/outline";
 import axios from "axios";
-import { apiUrl } from "../api";
+import { apiUrl } from "../../api";
 
-import BenefitItem from "../components/BenefitItem";
-import StatCard from "../components/StatCard";
-import PrescriptionItem from "../components/PrescriptionItem";
-import Appointment from "../components/Appointment";
-import QuickActions from "../components/QuickActions";
-import AppointmentList from "../components/AppointmentList";
+import BenefitItem from "../../components/common/BenefitItem";
+import StatCard from "../../components/common/StatCard";
+import PrescriptionItem from "../../components/prescriptions/PrescriptionItem";
+import Appointment from "../../components/appointments/Appointment";
+import QuickActions from "../../components/common/QuickActions";
+import AppointmentList from "../../components/appointments/AppointmentList";
 
-import SideBar from "../Templates/SideBar";
-import WrapperCard from "../Templates/WrapperCard";
+import SideBar from "../../Templates/SideBar";
+import WrapperCard from "../../Templates/WrapperCard";
 
 export default function PatientDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -144,21 +144,18 @@ export default function PatientDashboard({ profile }) {
                     onClick={() => setPrescriptionFilter("active")}
                     className={`px-4 py-2 rounded-lg ${
                       prescriptionFilter === "active" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"
-                    }`}
-                  >
+                    }`}>
                     Active
                   </button>
                   <button
                     onClick={() => setPrescriptionFilter("history")}
                     className={`px-4 py-2 rounded-lg ${
                       prescriptionFilter === "history" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"
-                    }`}
-                  >
+                    }`}>
                     History
                   </button>
                 </div>
-              }
-            >
+              }>
               <div className="space-y-4">
                 {loadingPrescriptions ? (
                   <div>Loading prescriptions...</div>

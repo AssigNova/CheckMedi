@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { apiUrl } from "../api";
+import { apiUrl } from "../../api";
 
 export default function PrescriptionModal({ open, onClose, appointment, doctorId, onSuccess }) {
   const [pharmacies, setPharmacies] = useState([]);

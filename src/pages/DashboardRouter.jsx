@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PatientDashboard from "./PatientDashboard";
-import DoctorDashboard from "./DoctorDashboard";
-import PharmacyDashboard from "./PharmacyDashboard";
+import PatientDashboard from "./patient/PatientDashboard";
+import DoctorDashboard from "./doctor/DoctorDashboard";
+import PharmacyDashboard from "./pharmacy/PharmacyDashboard";
+import AdminDashboard from "./admin/AdminDashboard";
 import { apiUrl } from "../api";
 
 export default function DashboardRouter() {
@@ -41,5 +42,6 @@ export default function DashboardRouter() {
   if (profile.role === "Patient") return <PatientDashboard profile={profile} />;
   if (profile.role === "Doctor") return <DoctorDashboard profile={profile} />;
   if (profile.role === "Pharmacy") return <PharmacyDashboard profile={profile} />;
+  if (profile.role === "Admin") return <AdminDashboard profile={profile} />;
   return <div className="text-center mt-10">Unknown role</div>;
 }

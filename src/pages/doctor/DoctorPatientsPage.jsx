@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { apiUrl } from "../api";
+import { apiUrl } from "../../api";
 
 export default function DoctorPatientsPage({ doctorId }) {
   const [patients, setPatients] = useState([]);
@@ -33,7 +33,7 @@ export default function DoctorPatientsPage({ doctorId }) {
         });
         setPatients(uniquePatients);
       } catch (err) {
-        setError("Failed to load patients");
+        setError("Failed to load patients" + err);
       } finally {
         setLoading(false);
       }
@@ -78,8 +78,7 @@ export default function DoctorPatientsPage({ doctorId }) {
               <li key={p._id} className="mb-2">
                 <button
                   className={`w-full text-left px-3 py-2 rounded ${selectedPatient?._id === p._id ? "bg-blue-100" : "hover:bg-gray-100"}`}
-                  onClick={() => handleSelectPatient(p)}
-                >
+                  onClick={() => handleSelectPatient(p)}>
                   {p.name} <span className="text-xs text-gray-500">({p.email || p.gender})</span>
                 </button>
               </li>

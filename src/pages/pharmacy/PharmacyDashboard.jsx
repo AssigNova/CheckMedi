@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { TruckIcon, DocumentTextIcon, ChartBarIcon, ArchiveIcon } from "@heroicons/react/outline";
 import axios from "axios";
 
-import { apiUrl } from "../api";
+import { apiUrl } from "../../api";
 
-import SideBar from "../Templates/SideBar";
-import StatCard from "../components/StatCard";
-import PrescriptionItem from "../components/PrescriptionItem";
+import SideBar from "../../Templates/SideBar";
+import StatCard from "../../components/common/StatCard";
+import PrescriptionItem from "../../components/prescriptions/PrescriptionItem";
 
 export default function PharmacyDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("orders");
@@ -81,16 +81,14 @@ export default function PharmacyDashboard({ profile }) {
                   onClick={() => setOrderFilter("pending")}
                   className={`px-4 py-2 rounded-lg ${
                     orderFilter === "pending" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"
-                  }`}
-                >
+                  }`}>
                   Pending (15)
                 </button>
                 <button
                   onClick={() => setOrderFilter("processing")}
                   className={`px-4 py-2 rounded-lg ${
                     orderFilter === "processing" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"
-                  }`}
-                >
+                  }`}>
                   Processing (8)
                 </button>
               </div>
@@ -125,8 +123,7 @@ export default function PharmacyDashboard({ profile }) {
                     <td>
                       <button
                         className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                        onClick={() => setSelectedOrder(true)}
-                      >
+                        onClick={() => setSelectedOrder(true)}>
                         Process Order
                       </button>
                     </td>
@@ -202,8 +199,7 @@ const InventoryItem = ({ medication, stock, threshold, lastOrder, critical }) =>
     <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
       <div
         className={`${critical ? "bg-red-600" : "bg-blue-600"} h-2 rounded-full`}
-        style={{ width: `${(stock / threshold) * 100}%` }}
-      ></div>
+        style={{ width: `${(stock / threshold) * 100}%` }}></div>
     </div>
     <p className="text-sm text-gray-600 mt-2">Last ordered: {lastOrder}</p>
   </div>
