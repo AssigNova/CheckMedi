@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { apiUrl } from "../../api";
+import useHospitals from "../../hooks/useHospitals";
 
 export default function Signup() {
   const { login } = useAuth();
@@ -30,6 +31,9 @@ export default function Signup() {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [selectedHospital, setSelectedHospital] = useState("");
+  const [documentFile, setDocumentFile] = useState(null);
+  const { hospitals } = useHospitals();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,11 +56,12 @@ export default function Signup() {
     setError("");
     setSuccess("");
     let submitData = { ...form };
-    // In handleSubmit, map new fields for doctor
+    let formData;
     if (form.role === "Doctor") {
       submitData = {
         ...form,
         ...doctorDetails,
+        hospital: selectedHospital,
         languagesSpoken: doctorDetails.languagesSpoken
           .split(",")
           .map((s) => s.trim())
@@ -81,16 +86,33 @@ export default function Signup() {
           instagram: doctorDetails.instagram,
         },
       };
+      formData = new FormData();
+      Object.entries(submitData).forEach(([key, value]) => {
+        if (typeof value === "object" && value !== null) {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, value);
+        }
+      });
+      if (documentFile) formData.append("documents", documentFile);
     }
     try {
-      const res = await fetch(apiUrl("api/auth/register"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(submitData),
-      });
-      const data = await res.json();
+      let res, data;
+      if (form.role === "Doctor") {
+        res = await fetch(apiUrl("api/auth/register"), {
+          method: "POST",
+          body: formData,
+        });
+      } else {
+        res = await fetch(apiUrl("api/auth/register"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(submitData),
+        });
+      }
+      data = await res.json();
       if (!res.ok) throw new Error(data.error || "Signup failed");
-      login(data.token);
+      login(data);
       setSuccess("Signup successful! Redirecting to dashboard...");
       setTimeout(() => navigate("/dashboard"), 1200);
     } catch (err) {
@@ -136,6 +158,29 @@ export default function Signup() {
         {/* Doctor extra fields */}
         {form.role === "Doctor" && (
           <div className="mb-4">
+            {/* Hospital selection */}
+            <label className="block text-sm font-medium text-gray-700 mb-1">Select Hospital</label>
+            <select
+              className="w-full p-2 mb-2 border rounded"
+              value={selectedHospital}
+              onChange={(e) => setSelectedHospital(e.target.value)}
+              required>
+              <option value="">-- Select Hospital --</option>
+              {hospitals.map((h) => (
+                <option key={h._id} value={h._id}>
+                  {h.name}
+                </option>
+              ))}
+            </select>
+            {/* Document upload */}
+            <label className="block text-sm font-medium text-gray-700 mb-1">Supporting Document</label>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+              className="w-full p-2 mb-2 border rounded"
+              onChange={(e) => setDocumentFile(e.target.files[0])}
+              required
+            />
             <input
               className="w-full p-2 mb-2 border rounded"
               name="specialization"
