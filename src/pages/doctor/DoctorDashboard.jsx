@@ -15,14 +15,15 @@ import BenefitItem from "../../components/common/BenefitItem";
 import Appointment from "../../components/appointments/Appointment";
 import AppointmentList from "../../components/appointments/AppointmentList";
 import StatCard from "../../components/common/StatCard";
-import SideBar from "../../Templates/SideBar";
-import WrapperCard from "../../Templates/WrapperCard";
+import SideBar from "../../UI/SideBar";
+import WrapperCard from "../../UI/WrapperCard";
 import DoctorPatientsPage from "./DoctorPatientsPage";
+import DoctorRequestReport from "./DoctorRequestReport";
 
 export default function DoctorDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("overview");
   const [scheduleView, setScheduleView] = useState("upcoming");
-
+  localStorage.setItem('doctorId', profile?._id || '');
   if (!profile) return null;
 
   return (
@@ -35,6 +36,8 @@ export default function DoctorDashboard({ profile }) {
             { id: "overview", icon: ChartBarIcon, label: "Overview" },
             { id: "appointments", icon: CalendarIcon, label: "Appointments" },
             { id: "patients", icon: UserGroupIcon, label: "Patients" },
+            { id: "AddReport", icon: UserGroupIcon, label: "Request Report" },
+            { id: "reports", icon: DocumentTextIcon, label: "Reports", link: "/doctor/reports" },
             { id: "profile", icon: UserCircleIcon, label: "Profile" },
           ]}
           heading="CheckMedi"
@@ -116,6 +119,7 @@ export default function DoctorDashboard({ profile }) {
 
           {/* Render DoctorPatientsPage when 'patients' tab is active */}
           {activeTab === "patients" && <DoctorPatientsPage doctorId={profile._id} />}
+          {activeTab === "AddReport" && <DoctorRequestReport doctorId={profile._id} />}
 
           {/* Stats Footer */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">

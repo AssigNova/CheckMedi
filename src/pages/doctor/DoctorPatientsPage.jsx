@@ -4,6 +4,7 @@ import { apiUrl } from "../../api";
 
 export default function DoctorPatientsPage({ doctorId }) {
   const [patients, setPatients] = useState([]);
+  const [labs, setLabs] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [prescriptions, setPrescriptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,7 @@ export default function DoctorPatientsPage({ doctorId }) {
           }
         });
         setPatients(uniquePatients);
+
       } catch (err) {
         setError("Failed to load patients" + err);
       } finally {

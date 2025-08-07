@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Appointment from "./Appointment";
-import WrapperCard from "../../Templates/WrapperCard";
+import WrapperCard from "../../UI/WrapperCard";
 import PrescriptionModal from "../prescriptions/PrescriptionModal";
 import { apiUrl } from "../../api";
 

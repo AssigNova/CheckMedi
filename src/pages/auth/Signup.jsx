@@ -154,6 +154,7 @@ export default function Signup() {
           <option value="Patient">Patient</option>
           <option value="Doctor">Doctor</option>
           <option value="Pharmacy">Pharmacy</option>
+          <option value="Lab">Pharmacy</option>
         </select>
         {/* Doctor extra fields */}
         {form.role === "Doctor" && (

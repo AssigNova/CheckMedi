@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { apiUrl } from "../../api";
 
-import SideBar from "../../Templates/SideBar";
+import SideBar from "../../UI/SideBar";
 import StatCard from "../../components/common/StatCard";
 import PrescriptionItem from "../../components/prescriptions/PrescriptionItem";
 

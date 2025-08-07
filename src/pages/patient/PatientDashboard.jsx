@@ -19,8 +19,8 @@ import Appointment from "../../components/appointments/Appointment";
 import QuickActions from "../../components/common/QuickActions";
 import AppointmentList from "../../components/appointments/AppointmentList";
 
-import SideBar from "../../Templates/SideBar";
-import WrapperCard from "../../Templates/WrapperCard";
+import SideBar from "../../UI/SideBar";
+import WrapperCard from "../../UI/WrapperCard";
 
 export default function PatientDashboard({ profile }) {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -63,7 +63,8 @@ export default function PatientDashboard({ profile }) {
             { id: "dashboard", icon: HeartIcon, label: "Health Dashboard" },
             { id: "book-appointment", icon: CalendarIcon, label: "Book Appointment", link: "/book-appointment" },
             { id: "prescriptions", icon: DocumentTextIcon, label: "Prescriptions", link: "/prescriptions" },
-            { id: "profile", icon: UserCircleIcon, label: "Profile" },
+                { id: "reports", icon: DocumentTextIcon, label: "Reports", link: "/patient/reports" },
+                { id: "profile", icon: UserCircleIcon, label: "Profile" },
           ]}
           heading="CheckMedi"
           text="Patient Portal"

@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { apiUrl } from "../../api";
 import axios from "axios";
+import SideBar from "../../UI/SideBar";
+import { ChartBarIcon, DocumentTextIcon } from "@heroicons/react/outline";
 
 const AdminDashboard = () => {
   const { user, token } = useContext(AuthContext);
@@ -129,7 +131,21 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="flex">
+      {/* Sidebar for admin */}
+      <div className="w-64">
+        <SideBar
+          values={[
+            { id: "dashboard", icon: ChartBarIcon, label: "Dashboard", link: "/admin/dashboard" },
+            { id: "manage-labs", icon: DocumentTextIcon, label: "Manage Labs", link: "/admin/labs" },
+            { id: "add-lab", icon: DocumentTextIcon, label: "Add Lab", link: "/admin/add-lab" },
+          ]}
+          heading="Admin"
+          text="Admin Portal"
+          activeTab={"dashboard"}
+        />
+      </div>
+      <div className="flex-1 max-w-6xl mx-auto p-6">
       <h2 className="text-3xl font-bold mb-6 text-center text-blue-700">Admin Dashboard</h2>
 
       {/* Hospital Management Section */}
@@ -285,6 +301,7 @@ const AdminDashboard = () => {
             </tbody>
           </table>
         </div>
+      </div>
       </div>
     </div>
   );

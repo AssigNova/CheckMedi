@@ -4,6 +4,7 @@ import PatientDashboard from "./patient/PatientDashboard";
 import DoctorDashboard from "./doctor/DoctorDashboard";
 import PharmacyDashboard from "./pharmacy/PharmacyDashboard";
 import AdminDashboard from "./admin/AdminDashboard";
+import LabDashboard from "./lab/LabDashboard";
 import { apiUrl } from "../api";
 
 export default function DashboardRouter() {
@@ -43,5 +44,6 @@ export default function DashboardRouter() {
   if (profile.role === "Doctor") return <DoctorDashboard profile={profile} />;
   if (profile.role === "Pharmacy") return <PharmacyDashboard profile={profile} />;
   if (profile.role === "Admin") return <AdminDashboard profile={profile} />;
+  if (profile.role === "Lab") return <LabDashboard profile={profile} />;
   return <div className="text-center mt-10">Unknown role</div>;
 }
