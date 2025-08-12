@@ -41,21 +41,8 @@ export default function PharmacyDashboard({ profile }) {
     <div className="min-h-screen bg-gray-50">
       {/* Dashboard Layout */}
       <div className="flex">
-        <SideBar
-          heading={"CheckMedi"}
-          text={"Pharmacy Portal"}
-          activeTab={activeTab}
-          onClickTab={setActiveTab}
-          values={[
-            { id: "orders", icon: TruckIcon, label: "Order Management" },
-            { id: "inventory", icon: ArchiveIcon, label: "Inventory" },
-            { id: "prescriptions", icon: DocumentTextIcon, label: "Prescriptions" },
-            { id: "analytics", icon: ChartBarIcon, label: "Analytics" },
-          ]}
-        />
-
         {/* Main Content */}
-        <div className="ml-64 p-8 w-full">
+        <div className=" p-8 w-full">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Pharmacy Dashboard - {profile.name}</h1>

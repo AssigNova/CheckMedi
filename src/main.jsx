@@ -1,7 +1,5 @@
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
-import App from "./App.jsx";
 import "./index.css";
 
 import LandingPage from "./pages/LandingPage";
@@ -29,7 +27,11 @@ import HospitalsListingPage from "./pages/Dummy/HospitalsListingPage.jsx";
 import PharmaciesListingPage from "./pages/Dummy/PharmaciesPage.jsx";
 import PatientPrescriptionsPage from "./pages/patient/PatientPrescriptionsPage.jsx";
 import SinglePrescriptionPage from "./pages/patient/SinglePrescriptionPage.jsx";
+import DoctorPatientsPage from "./pages/doctor/DoctorPatientsPage.jsx";
 import { apiUrl } from "./api";
+import Layout from "./Layout.jsx";
+import AppointmentList from "./components/appointments/AppointmentList.jsx";
+import LabReportDetail from "./pages/lab/LabReportDetail.jsx";
 
 // Loader for patient profile
 const fetchPatientProfile = async () => {
@@ -44,12 +46,7 @@ const fetchPatientProfile = async () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <>
-        <Navbar />
-        <App />
-      </>
-    ),
+    element: <Layout />, // <-- use layout here
     children: [
       // {
       //   path: "",
@@ -155,6 +152,22 @@ const router = createBrowserRouter([
       {
         path: "prescription/:id",
         element: <SinglePrescriptionPage />,
+      },
+      {
+        path: "doctorPatientPage",
+        element: <DoctorPatientsPage />,
+      },
+      {
+        path: "doctorRequestReport",
+        element: <DoctorRequestReport />,
+      },
+      {
+        path: "appointmentList",
+        element: <AppointmentList />,
+      },
+      {
+        path: "/lab/reports/:reportId",
+        element: <LabReportDetail />,
       },
     ],
   },

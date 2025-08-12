@@ -23,7 +23,6 @@ import SideBar from "../../UI/SideBar";
 import WrapperCard from "../../UI/WrapperCard";
 
 export default function PatientDashboard({ profile }) {
-  const [activeTab, setActiveTab] = useState("dashboard");
   const [prescriptionFilter, setPrescriptionFilter] = useState("active");
   const [prescriptions, setPrescriptions] = useState([]);
   const [loadingPrescriptions, setLoadingPrescriptions] = useState(false);
@@ -57,23 +56,8 @@ export default function PatientDashboard({ profile }) {
     <div className="min-h-screen bg-gray-50">
       {/* Dashboard Layout */}
       <div className="flex">
-        {/* Sidebar */}
-        <SideBar
-          values={[
-            { id: "dashboard", icon: HeartIcon, label: "Health Dashboard" },
-            { id: "book-appointment", icon: CalendarIcon, label: "Book Appointment", link: "/book-appointment" },
-            { id: "prescriptions", icon: DocumentTextIcon, label: "Prescriptions", link: "/prescriptions" },
-                { id: "reports", icon: DocumentTextIcon, label: "Reports", link: "/patient/reports" },
-                { id: "profile", icon: UserCircleIcon, label: "Profile" },
-          ]}
-          heading="CheckMedi"
-          text="Patient Portal"
-          onClickTab={setActiveTab}
-          activeTab={activeTab}
-        />
-
         {/* Main Content */}
-        <div className="ml-64 p-8 w-full">
+        <div className="p-8 w-full">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Welcome Back, {profile.name}!</h1>
@@ -83,9 +67,9 @@ export default function PatientDashboard({ profile }) {
           </div>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <QuickActions text="Book New Appointment" icon={CalendarIcon} color="blue" link="/book-appointment" />
-            <QuickActions text="Start Video Consultation" icon={VideoCameraIcon} color="green" link="/" />
+            {/* <QuickActions text="Start Video Consultation" icon={VideoCameraIcon} color="green" link="/" /> */}
             <QuickActions text="Order Medicines" icon={TruckIcon} color="purple" link="/" />
           </div>
 

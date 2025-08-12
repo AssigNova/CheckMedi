@@ -23,10 +23,13 @@ import HowItWorksSection from "./HomePage/HowItWorksSection";
 import HealthcareService from "./HomePage/HealthcareService";
 import ConsultationPlans from "./HomePage/ConsultationPlans";
 import ProductSlider from "./HomePage/ProductSlider";
+import SearchBar from "../UI/SearchBar";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+      <SearchBar />
+
       {/* Services Section */}
       <ServicesSection />
 

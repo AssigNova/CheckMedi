@@ -1,4 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+
+import BenefitItem from "../../components/common/BenefitItem";
+import Appointment from "../../components/appointments/Appointment";
+import AppointmentList from "../../components/appointments/AppointmentList";
+import StatCard from "../../components/common/StatCard";
+import SideBar from "../../UI/SideBar";
+import WrapperCard from "../../UI/WrapperCard";
+import DoctorPatientsPage from "./DoctorPatientsPage";
+import DoctorRequestReport from "./DoctorRequestReport";
+
 import {
   UserGroupIcon,
   ClockIcon,
@@ -10,44 +20,19 @@ import {
   CalendarIcon,
   UserCircleIcon,
 } from "@heroicons/react/outline";
-
-import BenefitItem from "../../components/common/BenefitItem";
-import Appointment from "../../components/appointments/Appointment";
-import AppointmentList from "../../components/appointments/AppointmentList";
-import StatCard from "../../components/common/StatCard";
-import SideBar from "../../UI/SideBar";
-import WrapperCard from "../../UI/WrapperCard";
-import DoctorPatientsPage from "./DoctorPatientsPage";
-import DoctorRequestReport from "./DoctorRequestReport";
+import AuthContext from "../../context/AuthContext";
 
 export default function DoctorDashboard({ profile }) {
-  const [activeTab, setActiveTab] = useState("overview");
-  const [scheduleView, setScheduleView] = useState("upcoming");
-  localStorage.setItem('doctorId', profile?._id || '');
-  if (!profile) return null;
+  const { user } = useContext(AuthContext);
+  profile = user;
+  localStorage.setItem("doctorId", profile?.id || "");
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Dashboard Layout */}
       <div className="flex">
-        {/* Sidebar */}
-        <SideBar
-          values={[
-            { id: "overview", icon: ChartBarIcon, label: "Overview" },
-            { id: "appointments", icon: CalendarIcon, label: "Appointments" },
-            { id: "patients", icon: UserGroupIcon, label: "Patients" },
-            { id: "AddReport", icon: UserGroupIcon, label: "Request Report" },
-            { id: "reports", icon: DocumentTextIcon, label: "Reports", link: "/doctor/reports" },
-            { id: "profile", icon: UserCircleIcon, label: "Profile" },
-          ]}
-          heading="CheckMedi"
-          text="Doctor Portal"
-          onClickTab={setActiveTab}
-          activeTab={activeTab}
-        />
-
         {/* Main Content */}
-        <div className="ml-64 p-8 w-full">
+        <div className="p-8 w-full">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Welcome, Dr. {profile.name}</h1>
@@ -115,11 +100,11 @@ export default function DoctorDashboard({ profile }) {
           </div>
 
           {/* My Appointments Section */}
-          <AppointmentList role="Doctor" setScheduleView={setScheduleView} scheduleView={scheduleView} />
+          {/* <AppointmentList role="Doctor" setScheduleView={setScheduleView} scheduleView={scheduleView} /> */}
 
           {/* Render DoctorPatientsPage when 'patients' tab is active */}
-          {activeTab === "patients" && <DoctorPatientsPage doctorId={profile._id} />}
-          {activeTab === "AddReport" && <DoctorRequestReport doctorId={profile._id} />}
+          {/* {activeTab === "patients" && <DoctorPatientsPage doctorId={profile._id} />}
+          {activeTab === "AddReport" && <DoctorRequestReport doctorId={profile._id} />} */}
 
           {/* Stats Footer */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">

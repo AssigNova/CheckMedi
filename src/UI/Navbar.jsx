@@ -4,8 +4,27 @@ import AuthContext from "../context/AuthContext.jsx";
 import { useContext } from "react";
 
 export default function Navbar() {
-  const { loggedIn, logout } = useContext(AuthContext);
+  const { loggedIn, logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const role = user.role;
+
+  let textColor = "text-blue-600";
+  let bgColor = "bg-blue-600";
+  let hoverColor = "bg-blue-600";
+
+  if (role === "Lab") {
+    textColor = "text-red-600";
+    bgColor = "bg-red-600";
+    hoverColor = "bg-red-700";
+  } else if (role === "Pharmacy") {
+    textColor = "text-yellow-600";
+    bgColor = "bg-yellow-600";
+    hoverColor = "bg-yellow-700";
+  } else if (role === "Doctor") {
+    textColor = "text-green-600";
+    bgColor = "bg-green-600";
+    hoverColor = "bg-green-700";
+  }
 
   const handleProfile = () => navigate("/profile");
   const handleLogin = () => navigate("/login");
@@ -24,19 +43,24 @@ export default function Navbar() {
             <a href="/">
               <div className="flex-shrink-0 flex items-center">
                 <img className="h-8 w-auto" src={mediCheck} alt="CheckMedi Logo" />
-                <span className="ml-2 text-xl font-bold text-blue-600">CheckMedi</span>
+                <span className={`ml-2 text-xl font-bold ${textColor}`}>CheckMedi</span>
               </div>
             </a>
             <div className="hidden md:flex space-x-8">
-              <button className="hover:text-blue-600">Articles</button>
-              <button className="hover:text-blue-600">For Hospitals</button>
-              <button className="hover:text-blue-600">For Pharmacy</button>
-              <a className="text-center align-middle flex" href="/jobs">
-                <button className="hover:text-blue-600">Jobs</button>
-              </a>
+              {!loggedIn && (
+                <>
+                  <button className={`hover:${textColor}`}>For Hospitals</button>
+                  <button className={`hover:${textColor}`}>For Pharmacy</button>
+                  <a className="text-center align-middle flex" href="/jobs">
+                    <button className={`hover:${textColor}`}>Jobs</button>
+                  </a>
+                </>
+              )}
               {loggedIn ? (
                 <div className="flex justify-between">
-                  <button onClick={handleProfile} className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700">
+                  <button
+                    onClick={handleProfile}
+                    className={`${bgColor} text-white px-4 py-2 rounded-md font-semibold hover:${hoverColor}`}>
                     Profile
                   </button>
                   <button
@@ -47,7 +71,7 @@ export default function Navbar() {
                 </div>
               ) : (
                 <div className="flex justify-between">
-                  <button onClick={handleLogin} className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700">
+                  <button onClick={handleLogin} className={`${bgColor} text-white px-4 py-2 rounded-md font-semibold hover:${hoverColor}`}>
                     Login
                   </button>
                   <button
@@ -61,35 +85,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-
-      {/* Search Bar Section */}
-      <div className="bg-gray-100 p-4 shadow-sm">
-        {/* <h2 className="text-center text-lg font-semibold mb-4 text-gray-700">Find the medical expert around you</h2> */}
-        <div className="flex items-center justify-center gap-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="px-4 py-2 rounded-md text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-1/3"
-          />
-          <select className="px-4 py-2 rounded-md text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option>Specialty</option>
-            <option>Obstetrics & Gynecology</option>
-            <option>Pediatrics</option>
-          </select>
-          <select className="px-4 py-2 rounded-md text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option>Location</option>
-            <option>New York</option>
-            <option>Los Angeles</option>
-          </select>
-          <select className="px-4 py-2 rounded-md text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option>Insurance</option>
-            <option>Provider A</option>
-            <option>Provider B</option>
-          </select>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700">Search</button>
-          <button className="bg-purple-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-purple-700">Shop</button>
-        </div>
-      </div>
     </>
   );
 }
