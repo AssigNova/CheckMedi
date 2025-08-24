@@ -10,14 +10,22 @@ export default function HealthcareService() {
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto"
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
           {/* Find Doctors Card */}
-          <motion.div whileHover={{ y: -5 }} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+          >
             <div className="bg-blue-100 w-fit p-4 rounded-xl mb-6">
               <FaMapMarkerAlt className="text-blue-600 text-3xl" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Find Doctors Near You</h3>
-            <p className="text-gray-600 mb-6">Select preferred doctor and time slots to book an in-clinic or video consultation</p>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              Find Doctors Near You
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Select preferred doctor and time slots to book an in-clinic or
+              video consultation
+            </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -28,12 +36,20 @@ export default function HealthcareService() {
           </motion.div>
 
           {/* Online Doctors Card */}
-          <motion.div whileHover={{ y: -5 }} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+          >
             <div className="bg-green-100 w-fit p-4 rounded-xl mb-6">
               <FaVideo className="text-green-600 text-3xl" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Doctors Online Now</h3>
-            <p className="text-gray-600 mb-6">Tell us your health concern and we'll connect you with a top doctor in 60 seconds</p>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              Doctors Online Now
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Tell us your health concern and we'll connect you with a top
+              doctor in 60 seconds
+            </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -44,12 +60,19 @@ export default function HealthcareService() {
           </motion.div>
 
           {/* Medical Professional Card */}
-          <motion.div whileHover={{ y: -5 }} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+          >
             <div className="bg-purple-100 w-fit p-4 rounded-xl mb-6">
               <FaUserMd className="text-purple-600 text-3xl" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Medical Professional?</h3>
-            <p className="text-gray-600 mb-6">Join our network of healthcare providers and expand your practice</p>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              Medical Professional?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Join our network of healthcare providers and expand your practice
+            </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

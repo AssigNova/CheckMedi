@@ -1,4 +1,9 @@
-import { UserIcon, BriefcaseIcon, TruckIcon, CheckCircleIcon } from "@heroicons/react/outline";
+import {
+  UserIcon,
+  BriefcaseIcon,
+  TruckIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/outline";
 
 export default function HowItWorksSection() {
   const sections = [
@@ -6,15 +11,27 @@ export default function HowItWorksSection() {
       title: "Patient Experience",
       color: "blue",
       icon: UserIcon,
-      description: "Empowering individuals with on-demand access to comprehensive healthcare services",
-      points: ["24/7 Video Consultations", "AI-Powered Symptom Checker", "Smart Prescription Tracking", "Integrated Health Records"],
+      description:
+        "Empowering individuals with on-demand access to comprehensive healthcare services",
+      points: [
+        "24/7 Video Consultations",
+        "AI-Powered Symptom Checker",
+        "Smart Prescription Tracking",
+        "Integrated Health Records",
+      ],
     },
     {
       title: "Doctor Enablement",
       color: "green",
       icon: BriefcaseIcon,
-      description: "Advanced tools for modern medical practice and patient management",
-      points: ["Smart Appointment Scheduling", "Telemedicine Workflow Suite", "AI-Assisted Diagnostics", "Continuing Education Portal"],
+      description:
+        "Advanced tools for modern medical practice and patient management",
+      points: [
+        "Smart Appointment Scheduling",
+        "Telemedicine Workflow Suite",
+        "AI-Assisted Diagnostics",
+        "Continuing Education Portal",
+      ],
     },
     {
       title: "Pharmacy Integration",
@@ -34,9 +51,12 @@ export default function HowItWorksSection() {
     <section className="py-24 px-6 bg-gradient-to-r from-blue-50 to-indigo-50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-extrabold text-gray-800 mb-6">How It Works</h2>
+          <h2 className="text-5xl font-extrabold text-gray-800 mb-6">
+            How It Works
+          </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Discover how our unified healthcare ecosystem connects patients, doctors, and pharmacies seamlessly.
+            Discover how our unified healthcare ecosystem connects patients,
+            doctors, and pharmacies seamlessly.
           </p>
         </div>
 
@@ -46,11 +66,21 @@ export default function HowItWorksSection() {
               key={idx}
               className="flex-1 bg-white p-10 rounded-xl shadow-lg hover:shadow-2xl transition-shadow border-t-4 border-blue-500"
             >
-              <div className={`flex items-center justify-center w-16 h-16 bg-${section.color}-100 rounded-full mx-auto mb-6`}>
-                <section.icon className={`h-10 w-10 text-${section.color}-600`} />
+              <div
+                className={`flex items-center justify-center w-16 h-16 bg-${section.color}-100 rounded-full mx-auto mb-6`}
+              >
+                <section.icon
+                  className={`h-10 w-10 text-${section.color}-600`}
+                />
               </div>
-              <h3 className={`text-2xl font-bold mb-4 text-${section.color}-600 text-center`}>{section.title}</h3>
-              <p className="text-gray-700 mb-6 text-center">{section.description}</p>
+              <h3
+                className={`text-2xl font-bold mb-4 text-${section.color}-600 text-center`}
+              >
+                {section.title}
+              </h3>
+              <p className="text-gray-700 mb-6 text-center">
+                {section.description}
+              </p>
               <ul className="text-gray-600 space-y-3">
                 {section.points.map((point, pointIdx) => (
                   <li key={pointIdx} className="flex items-center">

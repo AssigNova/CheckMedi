@@ -1,4 +1,10 @@
-import { ArrowRightIcon, UserIcon, BriefcaseIcon, TruckIcon, CheckCircleIcon } from "@heroicons/react/outline";
+import {
+  ArrowRightIcon,
+  UserIcon,
+  BriefcaseIcon,
+  TruckIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/outline";
 
 import {
   FaHospital,

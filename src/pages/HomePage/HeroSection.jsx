@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 export default function HeroSection() {
@@ -26,63 +26,53 @@ export default function HeroSection() {
     };
   }, []);
 
-  // Calculate normalized cursor position (-1 to 1) relative to window center
-  const normalizedX = (cursorPosition.x - windowSize.width / 2) / (windowSize.width / 2);
-  const normalizedY = (cursorPosition.y - windowSize.height / 2) / (windowSize.height / 2);
+  const normalizedX =
+    (cursorPosition.x - windowSize.width / 2) / (windowSize.width / 2);
+  const normalizedY =
+    (cursorPosition.y - windowSize.height / 2) / (windowSize.height / 2);
 
   return (
-    <section className="py-20 px-4 relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50">
-      {/* Animated Background Circles */}
+    <section className="py-10 px-2 sm:py-16 sm:px-4 relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50">
+      {/* Background Circles - smaller and repositioned on mobile */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-300 rounded-full opacity-30"
-        initial={{ scale: 0, opacity: 0 }}
+        className="absolute top-1/3 left-1/3 w-40 h-40 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-blue-300 rounded-full opacity-30"
         animate={{
-          scale: [0.8, 1.2, 1],
-          opacity: [0.2, 0.4, 0.3],
-          x: normalizedX * 50, // Adjust multiplier for movement range
-          y: normalizedY * 50,
+          x: normalizedX * 30,
+          y: normalizedY * 30,
         }}
         transition={{
-          scale: { duration: 6, repeat: Infinity, repeatType: "reverse" },
-          opacity: { duration: 6, repeat: Infinity, repeatType: "reverse" },
           x: { type: "spring", stiffness: 50, damping: 20 },
           y: { type: "spring", stiffness: 50, damping: 20 },
         }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-indigo-400 rounded-full opacity-20"
-        initial={{ scale: 0, opacity: 0 }}
+        className="absolute bottom-1/3 right-1/3 w-28 h-28 sm:w-48 sm:h-48 md:w-72 md:h-72 bg-indigo-400 rounded-full opacity-20"
         animate={{
-          scale: [0.7, 1.1, 0.9],
-          opacity: [0.2, 0.5, 0.3],
-          x: normalizedX * -40, // Negative multiplier for opposite direction
-          y: normalizedY * -40,
+          x: normalizedX * -25,
+          y: normalizedY * -25,
         }}
         transition={{
-          duration: 8,
-          repeat: Infinity,
-          repeatType: "reverse",
           x: { type: "spring", stiffness: 40, damping: 15 },
           y: { type: "spring", stiffness: 40, damping: 15 },
         }}
       />
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-blue-300 to-indigo-300 opacity-20"
-        initial={{ scale: 1.2, opacity: 0 }}
         animate={{ scale: 1, opacity: 0.3 }}
         transition={{ duration: 5, repeat: Infinity, repeatType: "reverse" }}
       />
-      {/* Rest of your content remains the same */}
-      <div className="max-w-7xl mx-auto text-center relative z-10">
+
+      {/* Content */}
+      <div className="max-w-6xl mx-auto text-center relative z-10 px-1 sm:px-2">
         <motion.h1
-          className="text-5xl md:text-6xl font-bold text-gray-900 mb-6"
+          className="text-2xl sm:text-4xl md:text-6xl font-bold text-gray-900 mb-4 sm:mb-6"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
           Revolutionizing Healthcare
           <motion.span
-            className="text-blue-600 block mt-2"
+            className="text-blue-600 block mt-2 text-lg sm:text-3xl md:text-4xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
@@ -90,42 +80,46 @@ export default function HeroSection() {
             Through Digital Connection
           </motion.span>
         </motion.h1>
+
         <motion.p
-          className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto"
+          className="text-sm sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto px-1 sm:px-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          Bridging the gap between patients, doctors, and pharmacies with an integrated digital healthcare platform
+          Bridging the gap between patients, doctors, and pharmacies with an
+          integrated digital healthcare platform.
         </motion.p>
+
+        {/* Buttons - stack vertically on mobile, horizontally on sm+ */}
         <motion.div
-          className="flex flex-col md:flex-row justify-center gap-4"
+          className="flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4 px-1 sm:px-4 w-full sm:w-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
         >
-          <a href="/dashboard">
+          <a href="/dashboard" className="w-full sm:w-auto">
             <motion.button
-              className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 flex items-center gap-2"
-              whileHover={{ scale: 1.1 }}
+              className="w-full bg-blue-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-base sm:text-lg font-semibold hover:bg-blue-700"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               I am a Patient
             </motion.button>
           </a>
-          <a href="/dashboard">
+          <a href="/dashboard" className="w-full sm:w-auto">
             <motion.button
-              className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 flex items-center gap-2"
-              whileHover={{ scale: 1.1 }}
+              className="w-full bg-green-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-base sm:text-lg font-semibold hover:bg-green-700"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Doctor's Cabin
             </motion.button>
           </a>
-          <a href="/dashboard">
+          <a href="/dashboard" className="w-full sm:w-auto">
             <motion.button
-              className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 flex items-center gap-2"
-              whileHover={{ scale: 1.1 }}
+              className="w-full bg-purple-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-base sm:text-lg font-semibold hover:bg-purple-700"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Pharmacy Store
