@@ -22,17 +22,20 @@ import { GiMedicinePills, GiHerbsBundle } from "react-icons/gi";
 import StatsSection from "./HomePage/StatsSection";
 import FeaturesSection from "./HomePage/FeaturesSection";
 import HeroSection from "./HomePage/HeroSection";
-import Navbar from "../Templates/Navbar";
-import Footer from "../Templates/Footer";
+import Navbar from "../UI/Navbar";
+import Footer from "../UI/Footer";
 import ServicesSection from "./HomePage/ServicesSection";
 import HowItWorksSection from "./HomePage/HowItWorksSection";
 import HealthcareService from "./HomePage/HealthcareService";
 import ConsultationPlans from "./HomePage/ConsultationPlans";
 import ProductSlider from "./HomePage/ProductSlider";
+import SearchBar from "../UI/SearchBar";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+      <SearchBar />
+
       {/* Services Section */}
       <ServicesSection />
 

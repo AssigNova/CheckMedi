@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { apiUrl } from "../../api";
 import axios from "axios";
+import SideBar from "../../UI/SideBar";
+import { ChartBarIcon, DocumentTextIcon } from "@heroicons/react/outline";
 
 const AdminDashboard = () => {
   const { user, token } = useContext(AuthContext);
@@ -111,6 +113,7 @@ const AdminDashboard = () => {
       if (!res.ok) throw new Error("Failed to fetch document");
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
+      console.log("Admin ULR", url);
       // Try to open in new tab if possible, else download
       const win = window.open(url, "_blank");
       if (!win) {
@@ -129,161 +132,164 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center text-blue-700">Admin Dashboard</h2>
+    <div className="flex">
+      {/* Sidebar for admin */}
+      <div className="flex-1 max-w-6xl mx-auto p-6">
+        <h2 className="text-3xl font-bold mb-6 text-center text-blue-700">Admin Dashboard</h2>
 
-      {/* Hospital Management Section */}
-      <div className="bg-white rounded-lg shadow p-6 mb-10">
-        <h3 className="text-xl font-semibold mb-4 text-gray-700">Hospital Management</h3>
-        <form className="mb-6 flex flex-col md:flex-row gap-4 items-end" onSubmit={handleAddHospital}>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={hospitalForm.name}
-              onChange={handleHospitalInput}
-              required
-              className="border rounded px-2 py-1 w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Address</label>
-            <input
-              type="text"
-              name="address"
-              value={hospitalForm.address}
-              onChange={handleHospitalInput}
-              className="border rounded px-2 py-1 w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Contact</label>
-            <input
-              type="text"
-              name="contact"
-              value={hospitalForm.contact}
-              onChange={handleHospitalInput}
-              className="border rounded px-2 py-1 w-full"
-            />
-          </div>
-          <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" disabled={hospitalLoading}>
-            {hospitalLoading ? "Adding..." : "Add Hospital"}
-          </button>
-        </form>
-        {hospitalError && <div className="text-red-600 mb-2">{hospitalError}</div>}
-        {hospitalSuccess && <div className="text-green-600 mb-2">{hospitalSuccess}</div>}
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg">
-            <thead className="bg-blue-100">
-              <tr>
-                <th className="py-2 px-4 text-left">Name</th>
-                <th className="py-2 px-4 text-left">Address</th>
-                <th className="py-2 px-4 text-left">Contact</th>
-              </tr>
-            </thead>
-            <tbody>
-              {hospitals.map((h) => (
-                <tr key={h._id} className="border-b">
-                  <td className="py-2 px-4">{h.name}</td>
-                  <td className="py-2 px-4">{h.address}</td>
-                  <td className="py-2 px-4">{h.contact}</td>
+        {/* Hospital Management Section */}
+        <div className="bg-white rounded-lg shadow p-6 mb-10">
+          <h3 className="text-xl font-semibold mb-4 text-gray-700">Hospital Management</h3>
+          <form className="mb-6 flex flex-col md:flex-row gap-4 items-end" onSubmit={handleAddHospital}>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={hospitalForm.name}
+                onChange={handleHospitalInput}
+                required
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Address</label>
+              <input
+                type="text"
+                name="address"
+                value={hospitalForm.address}
+                onChange={handleHospitalInput}
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Contact</label>
+              <input
+                type="text"
+                name="contact"
+                value={hospitalForm.contact}
+                onChange={handleHospitalInput}
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+            <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" disabled={hospitalLoading}>
+              {hospitalLoading ? "Adding..." : "Add Hospital"}
+            </button>
+          </form>
+          {hospitalError && <div className="text-red-600 mb-2">{hospitalError}</div>}
+          {hospitalSuccess && <div className="text-green-600 mb-2">{hospitalSuccess}</div>}
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-200 rounded-lg">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-4 text-left">Name</th>
+                  <th className="py-2 px-4 text-left">Address</th>
+                  <th className="py-2 px-4 text-left">Contact</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {hospitals.map((h) => (
+                  <tr key={h._id} className="border-b">
+                    <td className="py-2 px-4">{h.name}</td>
+                    <td className="py-2 px-4">{h.address}</td>
+                    <td className="py-2 px-4">{h.contact}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
-      {/* All Users Section */}
-      <div className="bg-white rounded-lg shadow p-6 mb-10">
-        <h3 className="text-xl font-semibold mb-4 text-gray-700">All Users</h3>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg">
-            <thead className="bg-blue-100">
-              <tr>
-                <th className="py-2 px-4 text-left">Name</th>
-                <th className="py-2 px-4 text-left">Email</th>
-                <th className="py-2 px-4 text-left">Role</th>
-                <th className="py-2 px-4 text-left">Hospital</th>
-                <th className="py-2 px-4 text-left">Document</th>
-                <th className="py-2 px-4 text-left">Verified</th>
-                <th className="py-2 px-4 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((u) => (
-                <tr key={u._id} className="border-b hover:bg-blue-50">
-                  <td className="py-2 px-4">{u.name}</td>
-                  <td className="py-2 px-4">{u.email}</td>
-                  <td className="py-2 px-4">{u.role}</td>
-                  <td className="py-2 px-4">
-                    {u.hospital ? u.hospital.name : u.role === "Doctor" ? <span className="text-gray-400">None</span> : ""}
-                  </td>
-                  <td className="py-2 px-4">
-                    {u.role === "Doctor" && u.documents ? (
-                      <button
-                        onClick={() => handleViewDocument(u._id, u.documents.split("/").pop())}
-                        className="text-blue-600 underline hover:text-blue-800 bg-transparent border-none cursor-pointer p-0">
-                        View Document
-                      </button>
-                    ) : (
-                      <span className="text-gray-400">No Document</span>
-                    )}
-                  </td>
-                  <td className="py-2 px-4">
-                    {u.isVerified ? (
-                      <span className="text-green-600 font-semibold">Yes</span>
-                    ) : (
-                      <span className="text-red-500 font-semibold">No</span>
-                    )}
-                  </td>
-                  <td className="py-2 px-4">
-                    {(u.role === "Doctor" || u.role === "Pharmacy") && !u.isVerified && (
-                      <>
-                        <button
-                          onClick={() => handleApprove(u._id)}
-                          className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded mr-2 transition">
-                          Approve
-                        </button>
-                        <button
-                          onClick={() => handleReject(u._id)}
-                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition">
-                          Reject
-                        </button>
-                      </>
-                    )}
-                  </td>
+        {/* All Users Section */}
+        <div className="bg-white rounded-lg shadow p-6 mb-10">
+          <h3 className="text-xl font-semibold mb-4 text-gray-700">All Users</h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-200 rounded-lg">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-4 text-left">Name</th>
+                  <th className="py-2 px-4 text-left">Email</th>
+                  <th className="py-2 px-4 text-left">Role</th>
+                  <th className="py-2 px-4 text-left">Hospital</th>
+                  <th className="py-2 px-4 text-left">Document</th>
+                  <th className="py-2 px-4 text-left">Verified</th>
+                  <th className="py-2 px-4 text-left">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {users.map((u) => (
+                  <tr key={u._id} className="border-b hover:bg-blue-50">
+                    <td className="py-2 px-4">{u.name}</td>
+                    <td className="py-2 px-4">{u.email}</td>
+                    <td className="py-2 px-4">{u.role}</td>
+                    <td className="py-2 px-4">
+                      {u.hospital ? u.hospital.name : u.role === "Doctor" ? <span className="text-gray-400">None</span> : ""}
+                    </td>
+                    <td className="py-2 px-4">
+                      {u.role === "Doctor" && u.documents ? (
+                        <button
+                          onClick={() => handleViewDocument(u._id, u.documents.split("/").pop())}
+                          className="text-blue-600 underline hover:text-blue-800 bg-transparent border-none cursor-pointer p-0">
+                          View Document
+                        </button>
+                      ) : (
+                        <span className="text-gray-400">No Document</span>
+                      )}
+                    </td>
+                    <td className="py-2 px-4">
+                      {u.isVerified ? (
+                        <span className="text-green-600 font-semibold">Yes</span>
+                      ) : (
+                        <span className="text-red-500 font-semibold">No</span>
+                      )}
+                    </td>
+                    <td className="py-2 px-4 flex">
+                      {(u.role === "Doctor" || u.role === "Pharmacy") && !u.isVerified && (
+                        <>
+                          <button
+                            onClick={() => handleApprove(u._id)}
+                            className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded mr-2 transition">
+                            Approve
+                          </button>
+                          <button
+                            onClick={() => handleReject(u._id)}
+                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition">
+                            Reject
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold mb-4 text-gray-700">All Appointments</h3>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg">
-            <thead className="bg-blue-100">
-              <tr>
-                <th className="py-2 px-4 text-left">Patient</th>
-                <th className="py-2 px-4 text-left">Doctor</th>
-                <th className="py-2 px-4 text-left">Date</th>
-                <th className="py-2 px-4 text-left">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {appointments.map((a) => (
-                <tr key={a._id} className="border-b hover:bg-blue-50">
-                  <td className="py-2 px-4">{a.patient?.name}</td>
-                  <td className="py-2 px-4">{a.doctor?.name}</td>
-                  <td className="py-2 px-4">{new Date(a.date).toLocaleString()}</td>
-                  <td className="py-2 px-4">{a.status}</td>
+        <div className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-xl font-semibold mb-4 text-gray-700">All Appointments</h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-200 rounded-lg">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-4 text-left">Patient</th>
+                  <th className="py-2 px-4 text-left">Doctor</th>
+                  <th className="py-2 px-4 text-left">Date</th>
+                  <th className="py-2 px-4 text-left">Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {appointments.map((a) => (
+                  <tr key={a._id} className="border-b hover:bg-blue-50">
+                    <td className="py-2 px-4">{a.patient?.name}</td>
+                    <td className="py-2 px-4">{a.doctor?.name}</td>
+                    <td className="py-2 px-4">{new Date(a.date).toLocaleString()}</td>
+                    <td className="py-2 px-4">{a.status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

@@ -1,18 +1,23 @@
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
-import App from "./App.jsx";
 import "./index.css";
 
 import LandingPage from "./pages/LandingPage";
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
+import DoctorReports from "./pages/doctor/DoctorReports";
+import DoctorRequestReport from "./pages/doctor/DoctorRequestReport";
+import LabDashboard from "./pages/lab/LabDashboard";
+import LabReportList from "./pages/lab/LabReportList";
+import PatientReports from "./pages/patient/PatientReports";
+import AdminLabList from "./pages/admin/AdminLabList";
+import AdminAddLab from "./pages/admin/AdminAddLab";
 import PatientDashboard from "./pages/patient/PatientDashboard.jsx";
 import PharmacyDashboard from "./pages/pharmacy/PharmacyDashboard.jsx";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login.jsx";
 import Profile from "./pages/auth/Profile";
 import Jobs from "./pages/Jobs.jsx";
-import Navbar from "./Templates/Navbar.jsx";
+import Navbar from "./UI/Navbar.jsx";
 import Articles from "./pages/Articles.jsx";
 import UpdateProfile from "./pages/auth/UpdateProfile.jsx";
 import DashboardRouter from "./pages/DashboardRouter.jsx";
@@ -22,7 +27,11 @@ import HospitalsListingPage from "./pages/Dummy/HospitalsListingPage.jsx";
 import PharmaciesListingPage from "./pages/Dummy/PharmaciesPage.jsx";
 import PatientPrescriptionsPage from "./pages/patient/PatientPrescriptionsPage.jsx";
 import SinglePrescriptionPage from "./pages/patient/SinglePrescriptionPage.jsx";
+import DoctorPatientsPage from "./pages/doctor/DoctorPatientsPage.jsx";
 import { apiUrl } from "./api";
+import Layout from "./Layout.jsx";
+import AppointmentList from "./components/appointments/AppointmentList.jsx";
+import LabReportDetail from "./pages/lab/LabReportDetail.jsx";
 
 // Loader for patient profile
 const fetchPatientProfile = async () => {
@@ -37,12 +46,7 @@ const fetchPatientProfile = async () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <>
-        <Navbar />
-        <App />
-      </>
-    ),
+    element: <Layout />, // <-- use layout here
     children: [
       // {
       //   path: "",
@@ -68,6 +72,34 @@ const router = createBrowserRouter([
       {
         path: "doctor",
         element: <DoctorDashboard />,
+      },
+      {
+        path: "doctor/reports",
+        element: <DoctorReports />,
+      },
+      {
+        path: "lab",
+        element: <LabDashboard />,
+      },
+      {
+        path: "doctor/request-report",
+        element: <DoctorRequestReport />,
+      },
+      {
+        path: "lab/reports",
+        element: <LabReportList />,
+      },
+      {
+        path: "patient/reports",
+        element: <PatientReports />,
+      },
+      {
+        path: "admin/labs",
+        element: <AdminLabList />,
+      },
+      {
+        path: "admin/add-lab",
+        element: <AdminAddLab />,
       },
       {
         path: "jobs",
@@ -120,6 +152,22 @@ const router = createBrowserRouter([
       {
         path: "prescription/:id",
         element: <SinglePrescriptionPage />,
+      },
+      {
+        path: "doctorPatientPage",
+        element: <DoctorPatientsPage />,
+      },
+      {
+        path: "doctorRequestReport",
+        element: <DoctorRequestReport />,
+      },
+      {
+        path: "appointmentList",
+        element: <AppointmentList />,
+      },
+      {
+        path: "/lab/reports/:reportId",
+        element: <LabReportDetail />,
       },
     ],
   },

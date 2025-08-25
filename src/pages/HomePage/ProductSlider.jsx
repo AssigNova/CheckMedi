@@ -62,13 +62,21 @@ export default function ProductSlider() {
             Featured Medical Products
           </h2>
         </div>
+<<<<<<< HEAD
         <div className="flex gap-5 overflow-x-auto scrollbar-hide pb-2 max-w-[100vw] w-[100vw] sm:max-w-full sm:w-full">
+=======
+        <div className="flex gap-5 overflow-x-auto scrollbar-hide pb-2">
+>>>>>>> 65654c5489dd7bfaa497ba37b965d83ca78999a2
           {products.map((product) => (
             <motion.div
               key={product.id}
               whileHover={{ y: -6, scale: 1.04 }}
+<<<<<<< HEAD
               className="flex-shrink-0 flex flex-col items-center min-w-[48vw] max-w-[50vw] sm:min-w-[220px] sm:max-w-[220px] bg-white border border-gray-100 rounded-xl p-0 shadow hover:shadow-lg transition-shadow"
             >
+=======
+              className="min-w-[220px] max-w-[220px] bg-white border border-gray-100 rounded-xl p-0 shadow hover:shadow-lg transition-shadow flex-shrink-0 flex flex-col items-center">
+>>>>>>> 65654c5489dd7bfaa497ba37b965d83ca78999a2
               <div className="w-full flex justify-center -mt-6">
                 <img
                   src={product.image}

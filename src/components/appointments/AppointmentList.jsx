@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Appointment from "./Appointment";
-import WrapperCard from "../../Templates/WrapperCard";
+import WrapperCard from "../../UI/WrapperCard";
 import PrescriptionModal from "../prescriptions/PrescriptionModal";
 import { apiUrl } from "../../api";
+import AuthContext from "../../context/AuthContext";
 
-export default function AppointmentList({ role, setScheduleView, scheduleView }) {
+export default function AppointmentList() {
+  const [scheduleView, setScheduleView] = useState("upcoming");
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { user } = useContext(AuthContext);
+  const role = user.role;
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -42,12 +46,14 @@ export default function AppointmentList({ role, setScheduleView, scheduleView })
         <div className="flex space-x-2">
           <button
             onClick={() => setScheduleView("upcoming")}
-            className={`px-4 py-2 rounded-lg ${scheduleView === "upcoming" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}>
+            className={`px-4 py-2 rounded-lg ${
+              scheduleView === "upcoming" ? "bg-green-600 text-white" : "text-gray-600 hover:bg-gray-50"
+            }`}>
             Upcoming
           </button>
           <button
             onClick={() => setScheduleView("past")}
-            className={`px-4 py-2 rounded-lg ${scheduleView === "past" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}>
+            className={`px-4 py-2 rounded-lg ${scheduleView === "past" ? "bg-green-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}>
             Past Consultations
           </button>
         </div>
@@ -130,7 +136,7 @@ function ManageAppointmentButton({ appt, role, onAction }) {
     <div className="flex flex-col gap-1">
       {role === "Doctor" && appt.status === "completed" && (
         <>
-          <button onClick={() => setShowPrescribe(true)} className="text-blue-600 hover:underline">
+          <button onClick={() => setShowPrescribe(true)} className="text-green-600 hover:underline">
             Prescribe
           </button>
           <PrescriptionModal
