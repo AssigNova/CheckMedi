@@ -3,22 +3,28 @@ import App from "./App";
 import Navbar from "./UI/Navbar";
 import SideBar from "./UI/SideBar";
 import SearchBar from "./UI/SearchBar";
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import AuthContext from "./context/AuthContext";
 
 export default function Layout() {
   const { user } = useContext(AuthContext);
   const role = user.role;
 
-  const excludedRoles = ["Lab", "Pharmacy", "Admin"];
-  let path = window.location.pathname;
-  console.log(path);
-  let sidebarClass = "w-64";
+  const [sidebarClass, setSidebarClass] = useState("w-64");
 
-  const exemptedPaths = ["/", "/signup"];
-  if (exemptedPaths.includes(path)) {
-    sidebarClass = "w-0 hidden";
-  }
+  const excludedRoles = ["Lab", "Pharmacy", "Admin"];
+  const exemptedPaths = ["/", "/signup", "/login"];
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (exemptedPaths.includes(location.pathname)) {
+      setSidebarClass("w-0 hidden");
+    } else {
+      setSidebarClass("w-64");
+    }
+  }, [user, location.pathname]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
