@@ -8,37 +8,43 @@ import {
   FaMapMarkerAlt,
   FaMicroscope,
   FaHandHoldingHeart,
+  FaSpa,
+  FaMedkit,
+  FaLeaf,
 } from "react-icons/fa";
 import { GiMedicinePills, GiHerbsBundle } from "react-icons/gi";
 
-export default function ServicesSection() {
-  const services = [
-    { name: "Hospital", icon: FaHospital, url: "/hospitals-list" },
-    { name: "Clinics", icon: FaClinicMedical, url: "/pharmacies-list" },
-    { name: "Medical Centre", icon: FaHospital, url: "/pharmacies-list" },
-    {
-      name: "Personalized Dashboard",
-      icon: GiHerbsBundle,
-      url: "/pharmacies-list",
-    },
-    {
-      name: "AI-Health Assistant",
-      icon: GiMedicinePills,
-      url: "/pharmacies-list",
-    },
-    { name: "Pet Treatments", icon: FaPaw, url: "/pharmacies-list" },
-    { name: "Pharmacy", icon: FaPrescriptionBottle, url: "/pharmacies-list" },
-    { name: "Labs", icon: FaFlask, url: "/pharmacies-list" },
-    { name: "Medical Insurance", icon: FaShieldAlt, url: "/pharmacies-list" },
-    {
-      name: "Health Marketplace",
-      icon: FaMapMarkerAlt,
-      url: "/pharmacies-list",
-    },
-    { name: "Research Centre", icon: FaMicroscope, url: "/pharmacies-list" },
-    { name: "Donors", icon: FaHandHoldingHeart, url: "/pharmacies-list" },
-  ];
+export const services = [
+  { name: "Hospital", icon: FaHospital, url: "/hospitals-list" },
+  { name: "Clinics", icon: FaClinicMedical, url: "/pharmacies-list" },
+  { name: "Medical Centre", icon: FaHospital, url: "/pharmacies-list" },
+  {
+    name: "Personalized Dashboard",
+    icon: GiHerbsBundle,
+    url: "/pharmacies-list",
+  },
+  // {
+  //   name: "AI-Health Assistant",
+  //   icon: GiMedicinePills,
+  //   url: "/pharmacies-list",
+  // },
+  { name: "Vet Treatments", icon: FaPaw, url: "/pharmacies-list" },
+  { name: "Pharmacy", icon: FaPrescriptionBottle, url: "/pharmacies-list" },
+  { name: "Labs", icon: FaFlask, url: "/pharmacies-list" },
+  { name: "Ayurvedic", icon: FaLeaf, url: "/pharmacies-list" },
+  { name: "Unani", icon: FaMedkit, url: "/pharmacies-list" },
+  { name: "Spa & Wellness", icon: FaSpa, url: "/pharmacies-list" },
+  { name: "Medical Insurance", icon: FaShieldAlt, url: "/pharmacies-list" },
+  {
+    name: "Health Marketplace",
+    icon: FaMapMarkerAlt,
+    url: "/pharmacies-list",
+  },
+  { name: "Research Centre", icon: FaMicroscope, url: "/pharmacies-list" },
+  { name: "Donors", icon: FaHandHoldingHeart, url: "/pharmacies-list" },
+];
 
+export default function ServicesSection() {
   return (
     <section className="bg-white py-4">
       <div className="max-w-7xl mx-auto px-0 sm:px-4">
