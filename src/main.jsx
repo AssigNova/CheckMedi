@@ -20,6 +20,7 @@ import Jobs from "./pages/Jobs.jsx";
 import Navbar from "./UI/Navbar.jsx";
 import Articles from "./pages/Articles.jsx";
 import UpdateProfile from "./pages/auth/UpdateProfile.jsx";
+import Shop from "./pages/Shop.jsx";
 import DashboardRouter from "./pages/DashboardRouter.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import BookAppointmentPage from "./pages/patient/BookAppointmentPage.jsx";
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "shop",
+        element: <Shop />,
       },
       {
         path: "update-profile",
