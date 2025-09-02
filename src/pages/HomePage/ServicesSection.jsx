@@ -68,6 +68,14 @@ export default function ServicesSection() {
           </div>
         </div>
       </div>
+      {/* Health Assistance Button below the scroll area */}
+      <div className="flex justify-center mt-4">
+        <a href="/HealthAssistance">
+          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+            Health Assistance
+          </button>
+        </a>
+      </div>
     </section>
   );
 }

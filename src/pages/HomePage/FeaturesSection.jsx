@@ -34,32 +34,39 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-24 px-4 bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-16 text-gray-800">
-          Explore Our Features
-        </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200"
-            >
+    <>
+      <section className="py-24 px-4 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16 text-gray-800">
+            Explore Our Features
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, idx) => (
               <div
-                className={`flex items-center justify-center w-16 h-16 ${feature.color} rounded-full mb-4`}
+                key={idx}
+                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200"
               >
-                <feature.icon className={`h-8 w-8 ${feature.textColor}`} />
+                <div
+                  className={`flex items-center justify-center w-16 h-16 ${feature.color} rounded-full mb-4`}
+                >
+                  <feature.icon className={`h-8 w-8 ${feature.textColor}`} />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-gray-800 text-center">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-gray-600 text-center">
+                  Secure and seamless integration with our healthcare network
+                </p>
               </div>
-              <h3 className="text-lg font-semibold mb-2 text-gray-800 text-center">
-                {feature.title}
-              </h3>
-              <p className="text-sm text-gray-600 text-center">
-                Secure and seamless integration with our healthcare network
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+      </section>
+      <div>
+        <a className="text-center align-middle flex" href="/HealthAssistance">
+          <button className="">Health Assistance</button>
+        </a>
       </div>
-    </section>
+    </>
   );
 }

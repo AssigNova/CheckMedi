@@ -30,6 +30,7 @@ import HealthcareService from "./HomePage/HealthcareService";
 import ConsultationPlans from "./HomePage/ConsultationPlans";
 import ProductSlider from "./HomePage/ProductSlider";
 import SearchBar from "../UI/SearchBar";
+import HealthAssistance from "./HealthAssistance";
 
 export default function LandingPage() {
   return (
@@ -38,6 +39,9 @@ export default function LandingPage() {
 
       {/* Services Section */}
       <ServicesSection />
+
+      {/* Health Assistance Section */}
+      {/* <HealthAssistance /> */}
 
       {/* Hero Section */}
       <HeroSection />

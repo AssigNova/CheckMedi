@@ -19,6 +19,7 @@ import Profile from "./pages/auth/Profile";
 import Jobs from "./pages/Jobs.jsx";
 import Navbar from "./UI/Navbar.jsx";
 import Articles from "./pages/Articles.jsx";
+import HealthAssistance from "./pages/HealthAssistance.jsx";
 import UpdateProfile from "./pages/auth/UpdateProfile.jsx";
 import Shop from "./pages/Shop.jsx";
 import DashboardRouter from "./pages/DashboardRouter.jsx";
@@ -161,6 +162,10 @@ const router = createBrowserRouter([
       {
         path: "doctorPatientPage",
         element: <DoctorPatientsPage />,
+      },
+      {
+        path: "HealthAssistance",
+        element: <HealthAssistance />,
       },
       {
         path: "doctorRequestReport",
