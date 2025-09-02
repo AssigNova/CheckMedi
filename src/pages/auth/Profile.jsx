@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiUrl } from "../../api";
+import { User, Mail, Shield, CheckCircle, Clock } from "lucide-react"; //
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);

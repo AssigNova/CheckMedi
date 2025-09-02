@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { apiUrl } from "../../api";
 import useHospitals from "../../hooks/useHospitals";
 import { motion, AnimatePresence } from "framer-motion";
+import hospitalsList from "../../data/hospitals"; // Use the new hospitals array
 
 export default function Signup() {
   const { login } = useAuth();
@@ -282,15 +283,20 @@ export default function Signup() {
 
               {form.role === "Doctor" && (
                 <div className="grid md:grid-cols-2 gap-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Select Hospital
+                  </label>
                   <select
-                    className="p-3 border rounded-lg"
+                    className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 mb-4"
+                    name="hospital"
+                    required
                     value={selectedHospital}
                     onChange={(e) => setSelectedHospital(e.target.value)}
                   >
-                    <option value="">-- Select Hospital --</option>
-                    {hospitals.map((h) => (
-                      <option key={h._id} value={h._id}>
-                        {h.name}
+                    <option value="">Select a hospital</option>
+                    {hospitalsList.map((hospital) => (
+                      <option key={hospital.id} value={hospital.name}>
+                        {hospital.name}
                       </option>
                     ))}
                   </select>
