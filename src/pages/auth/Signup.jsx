@@ -586,6 +586,9 @@ export default function Signup() {
                 {/* Add Doctor/Lab details summary */}
               </div>
 
+              {error && <div className="text-red-500 mb-2">{error}</div>}
+              {success && <div className="text-green-600 mb-2">{success}</div>}
+
               <div className="flex justify-between mt-6">
                 <button
                   type="button"
