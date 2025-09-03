@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import slider1 from "../../assets/slider1.jpg";
+import slider2 from "../../assets/slider2.jpg";
+import slider3 from "../../assets/slider3.jpg";
 
 export default function HeroSection() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -131,21 +134,21 @@ export default function HeroSection() {
     </>,
     <div className="flex items-center justify-center h-[300px] sm:h-[400px]">
       <img
-        src="/src/assets/slider1.jpg"
+        src={slider1}
         alt="Healthcare"
         className="max-h-full max-w-full rounded-xl shadow-lg"
       />
     </div>,
     <div className="flex items-center justify-center h-[300px] sm:h-[400px]">
       <img
-        src="/src/assets/slider2.jpg"
+        src={slider2}
         alt="Healthcare"
         className="max-h-full max-w-full rounded-xl shadow-lg"
       />
     </div>,
     <div className="flex items-center justify-center h-[300px] sm:h-[400px]">
       <img
-        src="/src/assets/slider3.jpg"
+        src={slider3}
         alt="Healthcare"
         className="max-h-full max-w-full rounded-xl shadow-lg"
       />

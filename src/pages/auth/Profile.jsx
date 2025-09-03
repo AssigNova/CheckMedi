@@ -39,7 +39,7 @@ export default function Profile() {
   if (!profile) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-300 via-indigo-400 to-black px-4">
       <div className="bg-white shadow-xl rounded-2xl w-full max-w-2xl p-8">
         {/* Header */}
         <div className="flex items-center justify-center mb-8">
