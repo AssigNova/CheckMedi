@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext.jsx";
 import { useContext } from "react";
 import { useState } from "react";
-import logocheckmedi from "../assets/logocheckmedi.PNG";
+import logocheckmedi from "../assets/5.png";
 
 const countries = [
   { name: "India", code: "IN", flag: "🇮🇳" },
@@ -54,13 +54,13 @@ export default function Navbar() {
             <a href="/">
               <div className="flex-shrink-0 flex items-center">
                 <img
-                  className="h-8 w-auto"
+                  className="h-40 w-auto"
                   src={logocheckmedi}
                   alt="CheckMedi Logo"
                 />
-                <span className={`ml-2 text-xl font-bold ${textColor}`}>
+                {/* <span className={`ml-2 text-xl font-bold ${textColor}`}>
                   CheckMedi
-                </span>
+                </span> */}
               </div>
             </a>
             {/* Desktop Region Dropdown - left aligned with flag */}
@@ -85,10 +85,16 @@ export default function Navbar() {
             <div className="hidden md:flex space-x-8">
               {!loggedIn && (
                 <>
-                  <button className={`hover:${textColor}`}>
-                    For Hospitals
-                  </button>
-                  <button className={`hover:${textColor}`}>For Pharmacy</button>
+                  <a className="text-center align-middle flex" href="/login">
+                    <button className={`hover:${textColor}`}>
+                      For Doctors
+                    </button>
+                  </a>
+                  <a className="text-center align-middle flex" href="/login">
+                    <button className={`hover:${textColor}`}>
+                      For Pharmacy
+                    </button>
+                  </a>
                   <a className="text-center align-middle flex" href="/jobs">
                     <button className={`hover:${textColor}`}>Jobs</button>
                   </a>

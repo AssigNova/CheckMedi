@@ -13,7 +13,7 @@ export default function Layout() {
   const role = user.role;
   const [sidebarClass, setSidebarClass] = useState("w-64");
   const excludedRoles = ["Lab", "Pharmacy", "Admin"];
-  const exemptedPaths = ["/", "/signup", "/login", "/shop"];
+  const exemptedPaths = ["/", "/signup", "/login", "/shop", "/hospitals-list"];
   const location = useLocation();
   const [showChatbot, setShowChatbot] = useState(false);
 
@@ -64,7 +64,8 @@ export default function Layout() {
           cursor: "pointer",
         }}
         onClick={() => setShowChatbot(true)}
-        aria-label="Open Chatbot">
+        aria-label="Open Chatbot"
+      >
         💬
       </button>
       {showChatbot && <Chatbot onClose={() => setShowChatbot(false)} />}

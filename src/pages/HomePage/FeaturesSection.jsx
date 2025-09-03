@@ -62,11 +62,6 @@ export default function FeaturesSection() {
           </div>
         </div>
       </section>
-      <div>
-        <a className="text-center align-middle flex" href="/HealthAssistance">
-          <button className="">Health Assistance</button>
-        </a>
-      </div>
     </>
   );
 }
