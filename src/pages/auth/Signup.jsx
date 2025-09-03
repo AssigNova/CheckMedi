@@ -3,9 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { apiUrl } from "../../api";
 import useHospitals from "../../hooks/useHospitals";
+import { motion, AnimatePresence } from "framer-motion";
+import hospitalsList from "../../data/hospitals"; // Use the new hospitals array
 
 export default function Signup() {
   const { login } = useAuth();
+  const [step, setStep] = useState(1);
+
+  const nextStep = () => setStep((s) => Math.min(s + 1, 3));
+  const prevStep = () => setStep((s) => Math.max(s - 1, 1));
 
   // Common form fields for all users
   const [form, setForm] = useState({
@@ -177,350 +183,427 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-300 via-indigo-400 to-black px-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow-md w-full max-w-md"
+        className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-3xl border border-gray-100"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        {/* Progress Indicator */}
+        <div className="flex justify-between mb-6 text-sm font-medium">
+          <div className={`${step >= 1 ? "text-blue-600" : "text-gray-400"}`}>
+            Step 1: Basic Info
+          </div>
+          <div className={`${step >= 2 ? "text-blue-600" : "text-gray-400"}`}>
+            Step 2: Role Details
+          </div>
+          <div className={`${step === 3 ? "text-blue-600" : "text-gray-400"}`}>
+            Step 3: Review
+          </div>
+        </div>
 
-        {/* Common signup fields */}
-        <input
-          className="w-full p-2 mb-4 border rounded"
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          className="w-full p-2 mb-4 border rounded"
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          className="w-full p-2 mb-4 border rounded"
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
+        <AnimatePresence mode="wait">
+          {/* Step 1 */}
+          {step === 1 && (
+            <motion.div
+              key="step1"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">
+                Basic Information
+              </h2>
 
-        {/* Role dropdown — fixed Lab label */}
-        <select
-          className="w-full p-2 mb-4 border rounded"
-          name="role"
-          value={form.role}
-          onChange={handleChange}
-        >
-          <option value="Patient">Patient</option>
-          <option value="Doctor">Doctor</option>
-          <option value="Pharmacy">Pharmacy</option>
-          <option value="Lab">Lab</option>
-        </select>
-
-        {/* Doctor extra fields — unchanged from your code */}
-        {form.role === "Doctor" && (
-          <div className="mb-4">
-            {
-              <div className="mb-4">
-                {/* Hospital selection */}
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Select Hospital
-                </label>
+              <div className="grid md:grid-cols-2 gap-4">
+                <input
+                  className="p-3 border rounded-lg"
+                  name="name"
+                  placeholder="Full Name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  className="p-3 border rounded-lg"
+                  name="email"
+                  type="email"
+                  placeholder="Email Address"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  className="p-3 border rounded-lg"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
                 <select
-                  className="w-full p-2 mb-2 border rounded"
-                  value={selectedHospital}
-                  onChange={(e) => setSelectedHospital(e.target.value)}
+                  className="p-3 border rounded-lg"
+                  name="role"
+                  value={form.role}
+                  onChange={handleChange}
                   required
                 >
-                  <option value="">-- Select Hospital --</option>
-                  {hospitals.map((h) => (
-                    <option key={h._id} value={h._id}>
-                      {h.name}
-                    </option>
-                  ))}
+                  <option value="Patient">Patient</option>
+                  <option value="Doctor">Doctor</option>
+                  <option value="Pharmacy">Pharmacy</option>
+                  <option value="Lab">Lab</option>
                 </select>
-                {/* Document upload */}
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Supporting Document
-                </label>
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                  className="w-full p-2 mb-2 border rounded"
-                  onChange={(e) => setDocumentFile(e.target.files[0])}
-                  required
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="specialization"
-                  placeholder="Specialization (e.g. Cardiologist)"
-                  value={doctorDetails.specialization}
-                  onChange={handleDoctorDetailsChange}
-                  required
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="experience"
-                  type="number"
-                  placeholder="Years of Experience"
-                  value={doctorDetails.experience}
-                  onChange={handleDoctorDetailsChange}
-                  required
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="qualifications"
-                  placeholder="Qualifications (e.g. MBBS, MD)"
-                  value={doctorDetails.qualifications}
-                  onChange={handleDoctorDetailsChange}
-                  required
-                />
-                <textarea
-                  className="w-full p-2 mb-2 border rounded"
-                  name="bio"
-                  placeholder="Short Bio"
-                  value={doctorDetails.bio}
-                  onChange={handleDoctorDetailsChange}
-                  required
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="photoUrl"
-                  placeholder="Profile Photo URL"
-                  value={doctorDetails.photoUrl}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="languagesSpoken"
-                  placeholder="Languages Spoken (comma separated)"
-                  value={doctorDetails.languagesSpoken}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="consultationFee"
-                  type="number"
-                  placeholder="Consultation Fee (INR)"
-                  value={doctorDetails.consultationFee}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="availabilitySummary"
-                  placeholder="Availability (e.g. Mon-Fri 10am-5pm)"
-                  value={doctorDetails.availabilitySummary}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="affiliations"
-                  placeholder="Affiliations (comma separated)"
-                  value={doctorDetails.affiliations}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="awards"
-                  placeholder="Awards (comma separated)"
-                  value={doctorDetails.awards}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="memberships"
-                  placeholder="Memberships (comma separated)"
-                  value={doctorDetails.memberships}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="address"
-                  placeholder="Clinic Address"
-                  value={doctorDetails.address}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="phone"
-                  placeholder="Phone Number"
-                  value={doctorDetails.phone}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="gender"
-                  placeholder="Gender"
-                  value={doctorDetails.gender}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <textarea
-                  className="w-full p-2 mb-2 border rounded"
-                  name="about"
-                  placeholder="About Doctor (detailed)"
-                  value={doctorDetails.about}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="website"
-                  placeholder="Website"
-                  value={doctorDetails.website}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="linkedin"
-                  placeholder="LinkedIn"
-                  value={doctorDetails.linkedin}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="twitter"
-                  placeholder="Twitter"
-                  value={doctorDetails.twitter}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="facebook"
-                  placeholder="Facebook"
-                  value={doctorDetails.facebook}
-                  onChange={handleDoctorDetailsChange}
-                />
-                <input
-                  className="w-full p-2 mb-2 border rounded"
-                  name="instagram"
-                  placeholder="Instagram"
-                  value={doctorDetails.instagram}
-                  onChange={handleDoctorDetailsChange}
-                />
               </div>
-            }
-          </div>
-        )}
 
-        {/* ✅ Lab extra fields */}
-        {form.role === "Lab" && (
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Lab Name
-            </label>
-            <input
-              className="w-full p-2 mb-2 border rounded"
-              name="labName"
-              value={labDetails.labName}
-              onChange={handleLabDetailsChange}
-              required
-            />
+              <div className="flex justify-end mt-6">
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Next →
+                </button>
+              </div>
+            </motion.div>
+          )}
 
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              License Number
-            </label>
-            <input
-              className="w-full p-2 mb-2 border rounded"
-              name="license_number" // Ensure this matches backend expectation
-              value={labDetails.license_number} // Correct state property
-              onChange={handleLabDetailsChange}
-              required
-            />
+          {/* Step 2: Role Details */}
+          {step === 2 && (
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">
+                {form.role} Details
+              </h2>
 
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Address
-            </label>
-            <input
-              className="w-full p-2 mb-2 border rounded"
-              name="address"
-              value={labDetails.address}
-              onChange={handleLabDetailsChange}
-              required
-            />
+              {form.role === "Doctor" && (
+                <div className="grid md:grid-cols-2 gap-4">
+                  <select
+                    className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 mb-4"
+                    name="hospital"
+                    required
+                    value={selectedHospital}
+                    onChange={(e) => setSelectedHospital(e.target.value)}
+                  >
+                    <option value="">Select a hospital</option>
+                    {hospitalsList.map((hospital) => (
+                      <option key={hospital.id} value={hospital.name}>
+                        {hospital.name}
+                      </option>
+                    ))}
+                  </select>
 
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Phone
-            </label>
-            <input
-              className="w-full p-2 mb-2 border rounded"
-              name="phone"
-              value={labDetails.phone}
-              onChange={handleLabDetailsChange}
-              required
-            />
+                  <input
+                    type="file"
+                    className="p-3 border rounded-lg"
+                    onChange={(e) => setDocumentFile(e.target.files[0])}
+                  />
 
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              className="w-full p-2 mb-2 border rounded"
-              name="email"
-              type="email"
-              value={labDetails.email}
-              onChange={handleLabDetailsChange}
-              required
-            />
+                  <input
+                    className="p-3 border rounded-lg"
+                    name="specialization"
+                    placeholder="Specialization"
+                    value={doctorDetails.specialization}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="p-3 border rounded-lg"
+                    name="experience"
+                    type="number"
+                    placeholder="Experience (years)"
+                    value={doctorDetails.experience}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  {/* Add rest of Doctor fields in grid */}
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="qualifications"
+                    placeholder="Qualifications (e.g. MBBS, MD)"
+                    value={doctorDetails.qualifications}
+                    onChange={handleDoctorDetailsChange}
+                    required
+                  />
+                  <textarea
+                    className="w-full p-2 mb-2 border rounded"
+                    name="bio"
+                    placeholder="Short Bio"
+                    value={doctorDetails.bio}
+                    onChange={handleDoctorDetailsChange}
+                    required
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="photoUrl"
+                    placeholder="Profile Photo URL"
+                    value={doctorDetails.photoUrl}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="languagesSpoken"
+                    placeholder="Languages Spoken (comma separated)"
+                    value={doctorDetails.languagesSpoken}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="consultationFee"
+                    type="number"
+                    placeholder="Consultation Fee (INR)"
+                    value={doctorDetails.consultationFee}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="availabilitySummary"
+                    placeholder="Availability (e.g. Mon-Fri 10am-5pm)"
+                    value={doctorDetails.availabilitySummary}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="affiliations"
+                    placeholder="Affiliations (comma separated)"
+                    value={doctorDetails.affiliations}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="awards"
+                    placeholder="Awards (comma separated)"
+                    value={doctorDetails.awards}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="memberships"
+                    placeholder="Memberships (comma separated)"
+                    value={doctorDetails.memberships}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="address"
+                    placeholder="Clinic Address"
+                    value={doctorDetails.address}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="phone"
+                    placeholder="Phone Number"
+                    value={doctorDetails.phone}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="gender"
+                    placeholder="Gender"
+                    value={doctorDetails.gender}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <textarea
+                    className="w-full p-2 mb-2 border rounded"
+                    name="about"
+                    placeholder="About Doctor (detailed)"
+                    value={doctorDetails.about}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="website"
+                    placeholder="Website"
+                    value={doctorDetails.website}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="linkedin"
+                    placeholder="LinkedIn"
+                    value={doctorDetails.linkedin}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="twitter"
+                    placeholder="Twitter"
+                    value={doctorDetails.twitter}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="facebook"
+                    placeholder="Facebook"
+                    value={doctorDetails.facebook}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="instagram"
+                    placeholder="Instagram"
+                    value={doctorDetails.instagram}
+                    onChange={handleDoctorDetailsChange}
+                  />
+                </div>
+              )}
 
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Services Offered (comma separated)
-            </label>
-            <input
-              className="w-full p-2 mb-2 border rounded"
-              name="servicesOffered"
-              value={labDetails.servicesOffered}
-              onChange={handleLabDetailsChange}
-            />
+              {form.role === "Lab" && (
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input
+                    className="p-3 border rounded-lg"
+                    name="labName"
+                    placeholder="Lab Name"
+                    value={labDetails.labName}
+                    onChange={handleLabDetailsChange}
+                  />
+                  <input
+                    className="p-3 border rounded-lg"
+                    name="license_number"
+                    placeholder="License Number"
+                    value={labDetails.license_number}
+                    onChange={handleLabDetailsChange}
+                  />
+                  <input
+                    className="p-3 border rounded-lg"
+                    name="address"
+                    placeholder="Address"
+                    value={labDetails.address}
+                    onChange={handleLabDetailsChange}
+                  />
+                  <input
+                    className="p-3 border rounded-lg"
+                    name="phone"
+                    placeholder="Phone"
+                    value={labDetails.phone}
+                    onChange={handleLabDetailsChange}
+                  />
+                  {/* Add rest of Lab fields in grid */}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </label>
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="email"
+                    type="email"
+                    value={labDetails.email}
+                    onChange={handleLabDetailsChange}
+                    required
+                  />
 
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Operating Hours
-            </label>
-            <input
-              className="w-full p-2 mb-2 border rounded"
-              name="operatingHours"
-              value={labDetails.operatingHours}
-              onChange={handleLabDetailsChange}
-            />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Services Offered (comma separated)
+                  </label>
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="servicesOffered"
+                    value={labDetails.servicesOffered}
+                    onChange={handleLabDetailsChange}
+                  />
 
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Website
-            </label>
-            <input
-              className="w-full p-2 mb-2 border rounded"
-              name="website"
-              value={labDetails.website}
-              onChange={handleLabDetailsChange}
-            />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Operating Hours
+                  </label>
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="operatingHours"
+                    value={labDetails.operatingHours}
+                    onChange={handleLabDetailsChange}
+                  />
 
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Supporting Document
-            </label>
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              className="w-full p-2 mb-2 border rounded"
-              onChange={(e) => setDocumentFile(e.target.files[0])}
-            />
-          </div>
-        )}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Website
+                  </label>
+                  <input
+                    className="w-full p-2 mb-2 border rounded"
+                    name="website"
+                    value={labDetails.website}
+                    onChange={handleLabDetailsChange}
+                  />
 
-        {/* Error & Success Messages */}
-        {error && <div className="text-red-500 mb-2">{error}</div>}
-        {success && <div className="text-green-600 mb-2">{success}</div>}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Supporting Document
+                  </label>
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    className="w-full p-2 mb-2 border rounded"
+                    onChange={(e) => setDocumentFile(e.target.files[0])}
+                  />
+                </div>
+              )}
 
-        {/* Submit button */}
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
-          Sign Up
-        </button>
+              <div className="flex justify-between mt-6">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="px-6 py-2 border rounded-lg hover:bg-gray-100"
+                >
+                  ← Back
+                </button>
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Next →
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 3: Review */}
+          {step === 3 && (
+            <motion.div
+              key="step3"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">
+                Review & Confirm
+              </h2>
+              <p className="text-gray-600 text-sm text-center mb-6">
+                Please check your details before submitting.
+              </p>
+
+              {/* You can show a summary card here */}
+              <div className="bg-gray-50 p-4 rounded-lg shadow-sm text-sm">
+                <p>
+                  <strong>Name:</strong> {form.name}
+                </p>
+                <p>
+                  <strong>Email:</strong> {form.email}
+                </p>
+                <p>
+                  <strong>Role:</strong> {form.role}
+                </p>
+                {/* Add Doctor/Lab details summary */}
+              </div>
+
+              <div className="flex justify-between mt-6">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="px-6 py-2 border rounded-lg hover:bg-gray-100"
+                >
+                  ← Back
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg shadow hover:scale-105 transition"
+                >
+                  Submit ✔
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </form>
     </div>
   );
