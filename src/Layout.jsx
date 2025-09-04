@@ -13,7 +13,14 @@ export default function Layout() {
   const role = user.role;
   const [sidebarClass, setSidebarClass] = useState("w-64");
   const excludedRoles = ["Lab", "Pharmacy", "Admin"];
-  const exemptedPaths = ["/", "/signup", "/login", "/shop", "/hospitals-list"];
+  const exemptedPaths = [
+    "/",
+    "/signup",
+    "/login",
+    "/shop",
+    "/hospitals-list",
+    "/hospital/:id",
+  ];
   const location = useLocation();
   const [showChatbot, setShowChatbot] = useState(false);
 

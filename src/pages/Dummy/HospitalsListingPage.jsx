@@ -1,37 +1,50 @@
 import { useState } from "react";
-import { FaSearch, FaStar, FaMapMarkerAlt, FaPhone, FaClock, FaHospital, FaBed, FaUserMd } from "react-icons/fa";
+import {
+  FaSearch,
+  FaStar,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaClock,
+  FaHospital,
+  FaBed,
+  FaUserMd,
+} from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const HospitalsListingPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [specialtyFilter, setSpecialtyFilter] = useState("all");
+  const navigate = useNavigate();
 
   // Dummy hospital data
   const hospitals = [
     {
       id: 1,
       name: "MediCare General Hospital",
+      image: "/images/medicare.webp", // Add your image path here
       address: "123 Wellness Avenue, Health City",
       rating: 4.7,
       specialties: ["Cardiology", "Orthopedics", "Neurology"],
-      description: "Award-winning hospital with state-of-the-art facilities and expert medical staff",
+      description:
+        "Award-winning hospital with state-of-the-art facilities and expert medical staff",
       contact: "+1 (555) 123-4567",
       hours: "24/7 Emergency Services",
       beds: 350,
       doctors: 120,
-      image: "hospital-1.jpg",
     },
     {
       id: 2,
       name: "Sunrise Children's Hospital",
+      image: "/images/sunraise.jpg",
       address: "456 Pediatric Lane, Care District",
       rating: 4.9,
       specialties: ["Pediatrics", "Neonatology", "Pediatric Surgery"],
-      description: "Specialized care for children with family-centered approach",
+      description:
+        "Specialized care for children with family-centered approach",
       contact: "+1 (555) 987-6543",
       hours: "Mon-Sat: 8am-8pm, Sun: 9am-5pm",
       beds: 200,
       doctors: 85,
-      image: "hospital-2.jpg",
     },
     {
       id: 3,
@@ -39,12 +52,13 @@ const HospitalsListingPage = () => {
       address: "789 Cardiac Street, Medical Hub",
       rating: 4.8,
       specialties: ["Cardiology", "Cardiac Surgery", "Vascular Medicine"],
-      description: "Leading cardiac care center with advanced diagnostic technologies",
+      description:
+        "Leading cardiac care center with advanced diagnostic technologies",
       contact: "+1 (555) 456-7890",
       hours: "24/7 Cardiac Emergency",
       beds: 180,
       doctors: 65,
-      image: "hospital-3.jpg",
+      image: "/images/metro.jpg",
     },
     {
       id: 4,
@@ -52,12 +66,13 @@ const HospitalsListingPage = () => {
       address: "321 Mobility Road, Health District",
       rating: 4.6,
       specialties: ["Orthopedics", "Sports Medicine", "Rehabilitation"],
-      description: "Specialized orthopedic care with advanced surgical techniques",
+      description:
+        "Specialized orthopedic care with advanced surgical techniques",
       contact: "+1 (555) 234-5678",
       hours: "Mon-Fri: 7am-9pm, Sat-Sun: 8am-6pm",
       beds: 150,
       doctors: 50,
-      image: "hospital-4.jpg",
+      image: "/images/orthoplus.jpg",
     },
     {
       id: 5,
@@ -65,12 +80,13 @@ const HospitalsListingPage = () => {
       address: "654 Brain Avenue, Neuro Center",
       rating: 4.9,
       specialties: ["Neurology", "Neurosurgery", "Neurorehabilitation"],
-      description: "Comprehensive neurological care with cutting-edge treatments",
+      description:
+        "Comprehensive neurological care with cutting-edge treatments",
       contact: "+1 (555) 345-6789",
       hours: "24/7 Neuro Emergency",
       beds: 220,
       doctors: 75,
-      image: "hospital-5.jpg",
+      image: "/images/neurocare.jpg",
     },
     {
       id: 6,
@@ -78,12 +94,13 @@ const HospitalsListingPage = () => {
       address: "987 Main Street, Downtown",
       rating: 4.5,
       specialties: ["General Surgery", "Internal Medicine", "Emergency Care"],
-      description: "Full-service hospital providing comprehensive healthcare services",
+      description:
+        "Full-service hospital providing comprehensive healthcare services",
       contact: "+1 (555) 567-8901",
       hours: "24/7 Full Services",
       beds: 500,
       doctors: 200,
-      image: "hospital-6.jpg",
+      image: "/images/city.jpeg",
     },
   ];
 
@@ -102,10 +119,14 @@ const HospitalsListingPage = () => {
   // Filter hospitals based on search and specialty
   const filteredHospitals = hospitals.filter((hospital) => {
     const matchesSearch =
-      hospital.name.toLowerCase().includes(searchQuery.toLowerCase()) || hospital.address.toLowerCase().includes(searchQuery.toLowerCase());
+      hospital.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      hospital.address.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesSpecialty =
-      specialtyFilter === "all" || hospital.specialties.some((s) => s.toLowerCase() === specialtyFilter.toLowerCase());
+      specialtyFilter === "all" ||
+      hospital.specialties.some(
+        (s) => s.toLowerCase() === specialtyFilter.toLowerCase()
+      );
 
     return matchesSearch && matchesSpecialty;
   });
@@ -115,9 +136,12 @@ const HospitalsListingPage = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Find the Best Hospitals</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Find the Best Hospitals
+          </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover top-rated healthcare facilities with specialized services and expert medical staff
+            Discover top-rated healthcare facilities with specialized services
+            and expert medical staff
           </p>
         </div>
 
@@ -140,7 +164,9 @@ const HospitalsListingPage = () => {
 
             {/* Specialty Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Specialty</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Filter by Specialty
+              </label>
               <select
                 className="block w-full py-4 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 value={specialtyFilter}
@@ -159,7 +185,8 @@ const HospitalsListingPage = () => {
         {/* Results Count */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-gray-800">
-            {filteredHospitals.length} {filteredHospitals.length === 1 ? "Hospital" : "Hospitals"} Found
+            {filteredHospitals.length}{" "}
+            {filteredHospitals.length === 1 ? "Hospital" : "Hospitals"} Found
           </h2>
           <div className="text-sm text-gray-600">
             Sorted by <span className="font-semibold">Highest Rating</span>
@@ -169,13 +196,21 @@ const HospitalsListingPage = () => {
         {/* Hospital Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredHospitals.map((hospital) => (
-            <div key={hospital.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+            <div
+              key={hospital.id}
+              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300"
+            >
               {/* Hospital Image */}
-              <div className="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
-                <FaHospital className="h-20 w-20 text-white opacity-30" />
-                <div className="absolute">
+              <div className="h-48 w-full relative flex items-center justify-center bg-gray-100">
+                <img
+                  src={hospital.image}
+                  alt={hospital.name}
+                  className="object-cover w-full h-full"
+                />
+                <div className="absolute top-2 right-2">
                   <span className="bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                    {hospital.rating} <FaStar className="inline-block -mt-0.5" />
+                    {hospital.rating}{" "}
+                    <FaStar className="inline-block -mt-0.5" />
                   </span>
                 </div>
               </div>
@@ -183,10 +218,14 @@ const HospitalsListingPage = () => {
               {/* Hospital Info */}
               <div className="p-6">
                 <div className="flex justify-between items-start">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{hospital.name}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {hospital.name}
+                  </h3>
                   <div className="flex items-center bg-green-50 text-green-800 px-2 py-1 rounded-full">
                     <FaStar className="h-4 w-4 mr-1" />
-                    <span className="text-sm font-semibold">{hospital.rating}</span>
+                    <span className="text-sm font-semibold">
+                      {hospital.rating}
+                    </span>
                   </div>
                 </div>
 
@@ -199,10 +238,15 @@ const HospitalsListingPage = () => {
 
                 {/* Specialties */}
                 <div className="mb-4">
-                  <span className="text-sm font-medium text-gray-900">Specialties:</span>
+                  <span className="text-sm font-medium text-gray-900">
+                    Specialties:
+                  </span>
                   <div className="flex flex-wrap mt-1">
                     {hospital.specialties.map((specialty) => (
-                      <span key={specialty} className="mr-2 mb-2 px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                      <span
+                        key={specialty}
+                        className="mr-2 mb-2 px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                      >
                         {specialty}
                       </span>
                     ))}
@@ -241,7 +285,10 @@ const HospitalsListingPage = () => {
 
                 {/* Action Buttons */}
                 <div className="mt-6 flex space-x-3">
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                  <button
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+                    onClick={() => navigate(`/hospital/${hospital.id}`)}
+                  >
                     View Details
                   </button>
                   <button className="flex-1 bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-colors">
@@ -259,8 +306,13 @@ const HospitalsListingPage = () => {
             <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 mx-auto flex items-center justify-center mb-4">
               <FaHospital className="h-8 w-8 text-gray-500" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No hospitals found</h3>
-            <p className="text-gray-600 max-w-md mx-auto">Try adjusting your search or filter criteria to find what you're looking for.</p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              No hospitals found
+            </h3>
+            <p className="text-gray-600 max-w-md mx-auto">
+              Try adjusting your search or filter criteria to find what you're
+              looking for.
+            </p>
             <button
               className="mt-4 text-blue-600 hover:text-blue-800 font-medium"
               onClick={() => {

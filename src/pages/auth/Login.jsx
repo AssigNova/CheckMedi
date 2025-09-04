@@ -89,10 +89,12 @@ export default function Login() {
         </div>
 
         {/* Error & Success */}
-        {error && <div className="text-red-500 mb-2 text-sm">{error}</div>}
+        {/* {error && <div className="text-red-500 mb-2 text-sm">{error}</div>}
         {success && (
           <div className="text-green-600 mb-2 text-sm">{success}</div>
-        )}
+        )} */}
+        {error && <div className="text-red-500 mb-2">{error}</div>}
+        {success && <div className="text-green-600 mb-2">{success}</div>}
 
         {/* Login Button */}
         <button

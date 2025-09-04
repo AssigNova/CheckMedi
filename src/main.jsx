@@ -34,6 +34,7 @@ import { apiUrl } from "./api";
 import Layout from "./Layout.jsx";
 import AppointmentList from "./components/appointments/AppointmentList.jsx";
 import LabReportDetail from "./pages/lab/LabReportDetail.jsx";
+import HospitalDummy from "./pages/Dummy/HospitalDummy.jsx";
 
 // Loader for patient profile
 const fetchPatientProfile = async () => {
@@ -178,6 +179,10 @@ const router = createBrowserRouter([
       {
         path: "/lab/reports/:reportId",
         element: <LabReportDetail />,
+      },
+      {
+        path: "hospital/:id",
+        element: <HospitalDummy />,
       },
     ],
   },
