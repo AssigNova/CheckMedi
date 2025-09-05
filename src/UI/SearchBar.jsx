@@ -20,7 +20,8 @@ export default function SearchBar() {
                  focus:outline-none focus:ring-2 focus:ring-blue-500 
                  shadow-[3px_2px_0_#3B82F6] w-full md:w-1/3"
           value={selected}
-          onChange={(e) => setSelected(e.target.value)}>
+          onChange={(e) => setSelected(e.target.value)}
+        >
           <option value="">Services</option>
           {services.map((service) => (
             <option key={service.name} value={service.name}>
@@ -34,7 +35,8 @@ export default function SearchBar() {
           <select
             className="w-full px-3 py-2 rounded-md text-gray-700 border 
                          focus:outline-none focus:ring-2 focus:ring-blue-500 
-                         shadow-[3px_2px_0_#3B82F6] text-sm md:text-base">
+                         shadow-[3px_2px_0_#3B82F6] text-sm md:text-base"
+          >
             <option>Specialty</option>
             <option>Obstetrics & Gynecology</option>
             <option>Pediatrics</option>
@@ -43,7 +45,8 @@ export default function SearchBar() {
           <select
             className="w-full px-3 py-2 rounded-md text-gray-700 border 
                          focus:outline-none focus:ring-2 focus:ring-blue-500 
-                         shadow-[3px_2px_0_#3B82F6] text-sm md:text-base">
+                         shadow-[3px_2px_0_#3B82F6] text-sm md:text-base"
+          >
             <option>Location</option>
             <option>New York</option>
             <option>Los Angeles</option>
@@ -52,10 +55,16 @@ export default function SearchBar() {
           <select
             className="w-full px-3 py-2 rounded-md text-gray-700 border 
                          focus:outline-none focus:ring-2 focus:ring-blue-500 
-                         shadow-[3px_2px_0_#3B82F6] text-sm md:text-base">
+                         shadow-[3px_2px_0_#3B82F6] text-sm md:text-base"
+          >
             <option>Insurance</option>
-            <option>Provider A</option>
-            <option>Provider B</option>
+            <option>Aditya Birla Health</option>
+            <option>Care Health Insurance</option>
+            <option>Galaxy Health Insurance</option>
+            <option>Narayana Health Insurance</option>
+            <option>ManipalCigna Health Insurance</option>
+            <option>Niva Bupa Health Insurance</option>
+            <option>Star Health & Allied Insurance</option>
           </select>
         </div>
 
@@ -63,7 +72,8 @@ export default function SearchBar() {
         <div className="flex flex-col gap-3 w-full md:flex-row md:w-auto">
           <button
             className="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold 
-                         hover:bg-blue-700 w-full md:w-auto">
+                         hover:bg-blue-700 w-full md:w-auto"
+          >
             Search
           </button>
 
@@ -74,14 +84,16 @@ export default function SearchBar() {
              text-white font-semibold px-6 py-2 rounded-md shadow-lg 
              hover:from-indigo-600 hover:to-red-700
              hover:shadow-xl hover:scale-105 transform transition-all 
-             duration-300 ease-in-out w-full md:w-auto">
+             duration-300 ease-in-out w-full md:w-auto"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth="2">
+                strokeWidth="2"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"

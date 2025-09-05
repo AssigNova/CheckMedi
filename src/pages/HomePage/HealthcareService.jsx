@@ -26,13 +26,15 @@ export default function HealthcareService() {
               Select preferred doctor and time slots to book an in-clinic or
               video consultation
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700"
-            >
-              Find Doctors Now
-            </motion.button>
+            <a href="/book-appointment">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700"
+              >
+                Find Doctors Now
+              </motion.button>
+            </a>
           </motion.div>
 
           {/* Online Doctors Card */}
@@ -73,13 +75,15 @@ export default function HealthcareService() {
             <p className="text-gray-600 mb-6">
               Join our network of healthcare providers and expand your practice
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"
-            >
-              Register Now
-            </motion.button>
+            <a href="/signup">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"
+              >
+                Register Now
+              </motion.button>
+            </a>
           </motion.div>
         </div>
 

@@ -98,13 +98,15 @@ export default function ConsultationPlans() {
               </p>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700"
-            >
-              Book Free Slot Now
-            </motion.button>
+            <a href="/book-appointment">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700"
+              >
+                Book Free Slot Now
+              </motion.button>
+            </a>
           </motion.div>
         </div>
 
